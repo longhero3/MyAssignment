@@ -1,4 +1,7 @@
 MyAssignment::Application.routes.draw do
+  resources :carts
+
+
   resources :order_lines
 
 
