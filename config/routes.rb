@@ -1,4 +1,22 @@
 MyAssignment::Application.routes.draw do
+  resources :order_lines
+
+
+  resources :orders
+
+
+  resources :comments
+
+
+  resources :categories
+
+
+  resources :users
+
+
+  resources :books
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
