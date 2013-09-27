@@ -33,6 +33,11 @@ group :test, :development do
   gem 'faker'
 end
 
+group :test do
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
+end
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password

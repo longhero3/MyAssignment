@@ -1,3 +1,3 @@
 class Category < ActiveRecord::Base
-  attr_accessible : name, :sort_order
+  attr_accessible :name
 end
