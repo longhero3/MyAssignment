@@ -1,0 +1,45 @@
+<div class="well">
+<ul class="nav nav-pills">
+	<% @categories.each do |category| %>
+		<li><a href="#"><%= category.name %><span class="badge">12</span></a></li>
+	<% end %>
+</ul>
+</div>
+<%= paginate @books, :remote => true %>
+<!-- display book list -->
+<% @books.each do |book| %>
+<div class="row">
+  <div class="col-md-11">
+    <div class="row">
+      <div class="col-md-8">
+        <h4><strong><%= book.title %></strong></h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <a href="#" class="thumbnail">
+            <%= image_tag(book.img_url, :size => "260x180") %>
+        </a>
+      </div>
+      <div class="col-md-9">      
+        <p>
+          <%= sanitize(book.description) %>
+        </p>
+        <p><a class="btn btn-success" href="#">Show Details</a></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <p></p>
+        <p>
+          <i class="icon-user"></i> Writen By <strong><%= book.author %></strong> 
+          |<i class="icon-user"></i> Published By <strong><%= book.publisher %></strong> 
+          | <i class="icon-comment"></i> Rating Counts <strong><%= book.rating_count %></strong>    
+          | <input type="number" name="your_awesome_parameter" id="some_id" class="rating" />  
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<% end %>
