@@ -23,7 +23,7 @@ Book.create(
   :published_date => '23/09/2000',
   :total_rating_value => 12,
   :rating_count => 4,
-  :img_url =>   'cs.jpg',    
+  :img_url =>   'temp0.jpg',    
   :price => 42.95)
 # . . .
 Book.create(
@@ -321,5 +321,15 @@ Category.create(
 # . . .
 Category.create(
   :name => 'Entertainment',
+  :sort_order => 'title'
+)
+# . . .
+Category.create(
+  :name => 'Comic',
+  :sort_order => 'title'
+)
+# . . .
+Category.create(
+  :name => 'All',
   :sort_order => 'title'
 )

@@ -17,6 +17,8 @@ class Book < ActiveRecord::Base
   	:message => 'Must be gif, pnj or jpg image'
   }
 
+  paginates_per 5
+
   # validates :happened_at_is_valid_datetime
 
   # def happened_at_is_valid_datetime

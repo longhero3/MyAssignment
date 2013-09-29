@@ -18,8 +18,10 @@ MyAssignment::Application.routes.draw do
 
   resources :users
 
-
+  match "store/index?page=:id", :to => 'store#index', :as => 'store'
   resources :books
+
+  root to: 'store#index', as: 'store' 
 
 
   # The priority is based upon order of creation:
