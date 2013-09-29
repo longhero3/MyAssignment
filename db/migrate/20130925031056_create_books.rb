@@ -8,7 +8,7 @@ class CreateBooks < ActiveRecord::Migration
       t.string :published_date
       t.decimal :price
       t.string :img_url
-      t.decimal :total_rating_value
+      t.integer :total_rating_value
       t.integer :rating_count
 
       t.timestamps
