@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<%= image_tag(@book.img_url) %>
 <p>
   <b> title:</b>
   <%= @book. title %>
@@ -7,7 +7,7 @@
 
 <p>
   <b>Description:</b>
-  <%= @book.description %>
+  <%= sanitize(@book.description) %>
 </p>
 
 <p>
@@ -31,11 +31,6 @@
 </p>
 
 <p>
-  <b>Img url:</b>
-  <%= @book.img_url %>
-</p>
-
-<p>
   <b>Total rating value:</b>
   <%= @book.total_rating_value %>
 </p>
@@ -45,6 +40,25 @@
   <%= @book.rating_count %>
 </p>
 
+<p>
+  <b>Average Rating:</b>
+  <%= @book.average_rating %>
+</p>
 
-<%= link_to 'Edit', edit_book_path(@book) %> |
-<%= link_to 'Back', books_path %>
+<div class="well">
+  <div class="row">
+    <form accept-charset="UTF-8" action="" method="POST">
+        <div class="col-md-8">
+          <textarea class="col-md-11" id="new_message" name="new_message" placeholder="Type in your message" rows="5"> </textarea>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-info" type="submit">Post New Message</button>
+        </div>
+    </form>
+  </div>
+</div>
+<ul class="thumbnails">
+<!-- Display comments -->
+<%= render(@book.comments) %>
+</ul>
+<%= link_to 'Back', store_path %>
