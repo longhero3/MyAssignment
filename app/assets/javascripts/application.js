@@ -14,3 +14,15 @@
 //= require jquery_ujs
 //= require_tree .
 //= require_tree ../../../vendor/assets/javascripts/.
+$(function() {
+	// $("#store #main-content .pagination a").click(function() {
+ //    $.getScript(this.href);
+ //    return false;
+ //  });
+  $("#books_search #search input").keypress(function(e) {
+  	if(e.keyCode == 13){
+    	$.get($("#books_search").attr("action"), $("#books_search").serialize(), null, "script");
+    	return false;
+    }
+  });
+});

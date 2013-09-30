@@ -17,8 +17,8 @@ development: &default
   # encoding: unicode
   database: MyAssignment_development
   host: localhost
-  username: 'long'
-  password: 123
+  # username: 'long'
+  # password: 123
   # pool: 5
   # timeout: 5000
 
