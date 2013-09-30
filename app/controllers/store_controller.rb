@@ -1,9 +1,6 @@
 class StoreController < ApplicationController
   def index
-  	@books = Book.order(:title).page(1)
-  	if params[:page] 
-  		@books = Book.order(:title).page(params[:page])
-  	end
+  	@books = Book.search(params[:search]).order(:title).paginate(:per_page => 5, :page => params[:page])
   	@categories = Category.order(:name)
 
   	respond_to do |format|

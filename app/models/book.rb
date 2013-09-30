@@ -4,6 +4,7 @@ class Book < ActiveRecord::Base
   	:rating_count, :total_rating_value
   has_many :comments
   has_many :order_lines
+  has_many :book_categories
 
   validates :title, :description, 
   	:img_url, :price, :published_date, 
@@ -17,12 +18,18 @@ class Book < ActiveRecord::Base
   	:message => 'Must be gif, pnj or jpg image'
   }
 
-  paginates_per 5
-
   # validates :happened_at_is_valid_datetime
 
   # def happened_at_is_valid_datetime
   #   errors.add(:published_date, 'must be a valid datetime') if ((DateTime.parse(published_date) rescue ArgumentError) == ArgumentError)
   # end
+
+  def self.search(input)
+    if input
+      where('title LIKE ?', "%#{input}%")
+    else
+      scoped
+    end
+  end
 
 end

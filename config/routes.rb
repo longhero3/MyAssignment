@@ -1,4 +1,7 @@
 MyAssignment::Application.routes.draw do
+  resources :book_categories
+
+
   get "store/index"
 
   resources :carts
