@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20130930055242) do
     t.string   "published_date"
     t.decimal  "price"
     t.string   "img_url"
-    t.decimal  "total_rating_value"
+    t.integer  "total_rating_value"
     t.integer  "rating_count"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false

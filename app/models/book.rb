@@ -5,6 +5,7 @@ class Book < ActiveRecord::Base
   has_many :comments
   has_many :order_lines
   has_many :book_categories
+  has_many :categories, through: :book_categories
 
   validates :title, :description, 
   	:img_url, :price, :published_date, 

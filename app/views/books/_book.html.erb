@@ -16,7 +16,7 @@
           <p>
             <%= sanitize(book.description) %>
           </p>
-          <p><a class="btn btn-success" href="#">Show Details</a></p>
+          <p><%= link_to "Show Details", book_path(:id => book.id), :class => 'btn btn-success' %></p>
         </div>
       </div>
       <div class="row">

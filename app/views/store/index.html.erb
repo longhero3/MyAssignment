@@ -1,7 +1,12 @@
 <div class="well">
 <ul class="nav nav-pills">
   <% @categories.each do |category| %>
-    <li><a href="#"><%= category.name %><span class="badge">12</span></a></li>
+    
+    <li><%= link_to store_path(:category => category.id) do %>
+          <%= category.name %>
+          <span class="badge"><%= category.book_categories.count %></span>
+        <% end %>
+    </li> 
   <% end %>
   <li>
     <div class="input-group">
@@ -12,16 +17,6 @@
   </li>
 </ul>
 </div>
-
-<p>Book ID and title:</p>
-<% @books.each do |book| %>
-  <p><%= book.id %>:<%= book.title %></p>
-<% end %>
-<p>Category ID and name: </p>
-<% @categories.each do |category| %>
-<p><%= category.id %>:<%= category.name %></p>
-<% end %>
-
 
 <div class="row">
   <div class="col-md-6 col-md-offset-5">
