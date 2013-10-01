@@ -47,6 +47,7 @@ class OrderLinesController < ApplicationController
     respond_to do |format|
       if @order_line.save
         format.html { redirect_to store_url, notice: "The book #{book.title} has been added to cart" }
+        format.js
         format.json { render json: @order_line, status: :created, location: @order_line }
       else
         format.html { render action: "new" }
@@ -81,6 +82,7 @@ class OrderLinesController < ApplicationController
     respond_to do |format|
       if @order_line.save
         format.html { redirect_to store_url }
+        format.js
         format.json { head :no_content }
       end
     end
