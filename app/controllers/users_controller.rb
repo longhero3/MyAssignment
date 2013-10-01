@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    @cart = current_cart
     @users = User.all
 
     respond_to do |format|
@@ -24,6 +25,7 @@ class UsersController < ApplicationController
   # GET /users/new
   # GET /users/new.json
   def new
+    @cart = current_cart
     @user = User.new
 
     respond_to do |format|
@@ -40,13 +42,18 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    @cart = current_cart
     @user = User.new(params[:user])
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        flash[:notice] = "Successfully registered"
+        flash[:color] = "valid"
+        format.html { redirect_to store_url, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
+        flash[:notice] = "The form is invalid"
+        flash[:color] = "invalid"
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
