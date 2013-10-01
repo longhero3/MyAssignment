@@ -40,11 +40,14 @@ class OrderLinesController < ApplicationController
   # POST /order_lines
   # POST /order_lines.json
   def create
-    @order_line = OrderLine.new(params[:order_line])
+    @cart = current_cart
+    book = Book.find(params[:book_id])
+    @order_line = @cart.add_book(book.id)
 
     respond_to do |format|
       if @order_line.save
-        format.html { redirect_to @order_line, notice: 'Order line was successfully created.' }
+        format.html { redirect_to store_url, notice: "The book #{book.title} has been added to cart" }
+        format.js
         format.json { render json: @order_line, status: :created, location: @order_line }
       else
         format.html { render action: "new" }
@@ -72,12 +75,16 @@ class OrderLinesController < ApplicationController
   # DELETE /order_lines/1
   # DELETE /order_lines/1.json
   def destroy
-    @order_line = OrderLine.find(params[:id])
-    @order_line.destroy
+    @cart = current_cart
+    @order_line = @cart.minus_quantity(params[:id])
+
 
     respond_to do |format|
-      format.html { redirect_to order_lines_url }
-      format.json { head :no_content }
+      if @order_line.save
+        format.html { redirect_to store_url }
+        format.js
+        format.json { head :no_content }
+      end
     end
   end
 end

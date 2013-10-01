@@ -16,7 +16,8 @@
           <p>
             <%= sanitize(book.description) %>
           </p>
-          <p><%= link_to "Show Details", book_path(:id => book.id), :class => 'btn btn-success' %></p>
+          <p><%= link_to "Show Details", book_path(:id => book.id), method: :get, :class => 'btn btn-success' %></p>
+          <%= link_to "Add to Cart", order_lines_path(book_id: book), :class => 'btn btn-warning', :method => 'POST', :remote => true %>
         </div>
       </div>
       <div class="row">
