@@ -2,8 +2,8 @@
  <table class="table table-striped table-condensed">
  	<%= render cart.order_lines %>
  	<tr class="total_line">
- 		<td colspan="2"> Total</td>
- 		<td class="total_cell" colspan="2"><%= number_to_currency(cart.total_price) %></td>
+ 		<td colspan="3"> Total</td>
+ 		<td class="total_cell" colspan="3"><%= number_to_currency(cart.total_price) %></td>
  	</tr>
  </table>
  <div class="row">
