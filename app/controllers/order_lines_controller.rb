@@ -74,12 +74,15 @@ class OrderLinesController < ApplicationController
   # DELETE /order_lines/1
   # DELETE /order_lines/1.json
   def destroy
-    @order_line = OrderLine.find(params[:id])
-    @order_line.destroy
+    @cart = current_cart
+    @order_line = @cart.minus_quantity(params[:id])
+
 
     respond_to do |format|
-      format.html { redirect_to order_lines_url }
-      format.json { head :no_content }
+      if @order_line.save
+        format.html { redirect_to store_url }
+        format.json { head :no_content }
+      end
     end
   end
 end
