@@ -29,18 +29,17 @@ describe BooksController do
   # in order to pass any filters (e.g. authentication) defined in
   # BooksController. Be sure to keep this updated too.
   let(:valid_session) { {} }
-
+  let(:book) { FactoryGirl.create :book }
+  let(:books) { FactoryGirl.create_list :books}
   describe "GET index" do
     it "assigns all books as @books" do
-      book = Book.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:books).should eq([book])
+      assigns(:books).should eq([books])
     end
   end
 
   describe "GET show" do
     it "assigns the requested book as @book" do
-      book = Book.create! valid_attributes
       get :show, {:id => book.to_param}, valid_session
       assigns(:book).should eq(book)
     end
@@ -55,7 +54,6 @@ describe BooksController do
 
   describe "GET edit" do
     it "assigns the requested book as @book" do
-      book = Book.create! valid_attributes
       get :edit, {:id => book.to_param}, valid_session
       assigns(:book).should eq(book)
     end
@@ -65,19 +63,19 @@ describe BooksController do
     describe "with valid params" do
       it "creates a new Book" do
         expect {
-          post :create, {:book => valid_attributes}, valid_session
+          post :create, {:book => book}, valid_session
         }.to change(Book, :count).by(1)
       end
 
       it "assigns a newly created book as @book" do
-        post :create, {:book => valid_attributes}, valid_session
+        post :create, {:book => book}, valid_session
         assigns(:book).should be_a(Book)
         assigns(:book).should be_persisted
       end
 
       it "redirects to the created book" do
-        post :create, {:book => valid_attributes}, valid_session
-        response.should redirect_to(Book.last)
+        post :create, {:book => book}, valid_session
+        response.should redirect_to(books_url)
       end
     end
 
@@ -144,14 +142,12 @@ describe BooksController do
 
   describe "DELETE destroy" do
     it "destroys the requested book" do
-      book = Book.create! valid_attributes
       expect {
         delete :destroy, {:id => book.to_param}, valid_session
       }.to change(Book, :count).by(-1)
     end
 
     it "redirects to the books list" do
-      book = Book.create! valid_attributes
       delete :destroy, {:id => book.to_param}, valid_session
       response.should redirect_to(books_url)
     end

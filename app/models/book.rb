@@ -7,6 +7,8 @@ class Book < ActiveRecord::Base
   has_many :book_categories
   has_many :categories, through: :book_categories
 
+  before_destroy :ensure_not_referenced_by_any_order_item
+
   validates :title, :description, 
   	:img_url, :price, :published_date, 
   	:publisher, :rating_count, :total_rating_value, 
@@ -35,6 +37,17 @@ class Book < ActiveRecord::Base
 
   def average_rating()
     average = total_rating_value / rating_count
+  end
+
+  private
+
+  def ensure_not_referenced_by_any_order_item
+    if order_lines.empty?
+      return true
+    else
+      errors.add(:base, 'Order Lines present')
+      return false
+    end
   end
 
 end

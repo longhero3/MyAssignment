@@ -19,4 +19,15 @@ describe Book do
 
   it { should have_many(:order_lines)}
 
+  it 'calculates average rating correctly' do
+    book.rating_count = 3
+    book.total_rating_value = 12
+    expect(book.average_rating).to eq(4)
+  end
+
+  it 'calculates average rating with indivisible rating count' do
+    book.rating_count = 3
+    book.total_rating_value = 11
+    expect(book.average_rating).to eq(3)
+  end
 end

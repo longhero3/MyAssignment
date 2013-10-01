@@ -40,11 +40,13 @@ class OrderLinesController < ApplicationController
   # POST /order_lines
   # POST /order_lines.json
   def create
-    @order_line = OrderLine.new(params[:order_line])
+    @cart = current_cart
+    book = Book.find(params[:book_id])
+    @order_line = @cart.add_book(book.id)
 
     respond_to do |format|
       if @order_line.save
-        format.html { redirect_to @order_line, notice: 'Order line was successfully created.' }
+        format.html { redirect_to store_url, notice: "The book #{book.title} has been added to cart" }
         format.json { render json: @order_line, status: :created, location: @order_line }
       else
         format.html { render action: "new" }
