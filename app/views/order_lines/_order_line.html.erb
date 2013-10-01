@@ -1,6 +1,6 @@
  <tr>
  	<td><%= order_line.quantity %> x </td>
- 	<td><%= order_line.book.title %></td>
+ 	<td><%= truncate order_line.book.title, :length => 7  %></td>
  	<td><%= number_to_currency(order_line.book.price) %></td>
  	<td><%= number_to_currency(order_line.total_price) %></td>
  	<td><%= button_to "+", order_lines_path(book_id: order_line.book), method: :post, :remote => true %></td>
