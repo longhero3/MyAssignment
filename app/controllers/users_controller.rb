@@ -44,7 +44,6 @@ class UsersController < ApplicationController
   def create
     @cart = current_cart
     @user = User.new(params[:user])
-
     respond_to do |format|
       if @user.save
         flash[:notice] = "Successfully registered"

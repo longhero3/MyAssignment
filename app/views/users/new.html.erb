@@ -55,6 +55,15 @@
       <br/>
 	</div>
 
+  <div class="col-md-6 col-md-offset-3">
+      <div class="input-group">
+        <!-- Phone -->
+        <span class="input-group-addon">Phone</span>
+        <%= f.text_field :phone, :placeholder => "Phone", :class => "form-control" %> 
+      </div>
+      <br/>
+  </div>
+
     <!-- Button -->
     <div class="col-md-7 col-md-offset-5">
       <%= f.submit :Signup, :class => "btn btn-success" %>
@@ -66,4 +75,5 @@
         <% end %>
       </ul>
     <% end %>
+    <%= f.hidden_field :create_date, :value => Time.current.to_date %>
 <% end %>
