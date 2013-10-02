@@ -13,7 +13,7 @@
 				<div class="well" style="width:300px; padding: 8px 0;">
 					<ul class="nav nav-list"> 
 						<% if current_user %>
-		  				<li class="nav-header">Welcome, <%= current_user.username %></li>
+		  				<li class="nav-header"><strong>Welcome, <%= current_user.username %></strong></li>
 		  				<li><%= link_to "Logout", logout_path, :method => "post" %></li>
 		  			<% else %>
 		  				<li class="nav-header">Welcome</li>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131002050018) do
+ActiveRecord::Schema.define(:version => 20131002074114) do
 
   create_table "book_categories", :force => true do |t|
     t.integer  "book_id"
@@ -81,12 +81,17 @@ ActiveRecord::Schema.define(:version => 20131002050018) do
     t.string   "full_name"
     t.date     "birthday"
     t.date     "create_date"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "username"
     t.string   "salt"
     t.string   "hash_password"
-    t.boolean  "admin",         :default => false
+    t.boolean  "admin",                :default => false
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
+
+  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
 
 end

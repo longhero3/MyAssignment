@@ -45,18 +45,27 @@
   <%= @book.average_rating %>
 </p>
 
+
 <div class="well">
   <div class="row">
-    <form accept-charset="UTF-8" action="" method="POST">
-        <div class="col-md-8">
-          <textarea class="col-md-11" id="new_message" name="new_message" placeholder="Type in your message" rows="5"> </textarea>
-        </div>
-        <div class="col-md-4">
-          <button class="btn btn-info" type="submit">Post New Message</button>
-        </div>
-    </form>
+    <%= form_for :comment, :url => {:controller => 'comments', :action => 'create'} do |f| %>
+      <div class="col-md-5">
+        <%= f.text_area :content, :class => "col-md-11", :placeholder => "Enter your comment", :rows => 5 %>
+      </div>
+      <div class="col-md-3">
+        <%= f.select :rating, (1..5) %>
+      </div>
+      <div class="col-md-4">
+        <%= f.submit :Post, :class => "btn btn-info" %>
+      </div>
+
+      <%= f.hidden_field :user_id, :value => session[:user_id] %>
+      <%= f.hidden_field :book_id, :value => @book.id %>
+      <%= f.hidden_field :comment_date, :value => Time.current.to_date %>
+    <% end %>  
   </div>
 </div>
+
 <ul class="thumbnails">
 <!-- Display comments -->
 <%= render(@book.comments) %>
