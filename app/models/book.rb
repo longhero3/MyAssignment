@@ -35,7 +35,7 @@ class Book < ActiveRecord::Base
     end
   end
 
-  def average_rating()
+  def average_rating
     average = total_rating_value / rating_count
   end
 

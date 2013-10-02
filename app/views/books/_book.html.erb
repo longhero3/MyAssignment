@@ -8,9 +8,9 @@
       </div>
       <div class="row">
         <div class="col-md-3">
-          <a href="#" class="thumbnail">
+          <%= link_to add_to_cart_path(book_id: book.id), :class => "thumbnail", :remote => true, :method => 'POST' do %>
               <%= image_tag(book.img_url, :size => "260x180") %>
-          </a>
+          <% end %>
         </div>
         <div class="col-md-9">      
           <p>

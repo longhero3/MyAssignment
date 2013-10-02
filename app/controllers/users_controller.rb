@@ -44,7 +44,9 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @cart = current_cart
+    User.first.send_confirmation_instructions
     @user = User.addUser(params[:user])
+
     respond_to do |format|
       if @user.save
         flash[:notice] = "Successfully registered"

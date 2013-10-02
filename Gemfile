@@ -8,6 +8,7 @@ gem 'rails', '3.2.14'
 gem 'pg'
 gem 'will_paginate', '~> 3.0'
 gem 'bcrypt-ruby', :require => 'bcrypt' 
+gem 'devise'
 
 
 # Gems used only for assets and not required
