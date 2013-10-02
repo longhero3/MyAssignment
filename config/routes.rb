@@ -1,8 +1,19 @@
 MyAssignment::Application.routes.draw do
+  get "sessions/new"
+
+  get "session/new"
+
   resources :book_categories
 
 
   get "store/index"
+
+  controller :sessions do
+    get "login" => :new
+    post "login" => :create
+    post "logout" => :destroy
+  end
+
 
   resources :carts
 
@@ -21,7 +32,9 @@ MyAssignment::Application.routes.draw do
 
   resources :users
 
-  
+
+  get "category/:category", :to => "store#index", :as => 'category_filter'
+  post "order_lines/book/:book_id", :to => "order_lines#create", :as => 'add_to_cart'
   match "store/index?page=:id", :to => 'store#index', :as => 'store'
   resources :books
 

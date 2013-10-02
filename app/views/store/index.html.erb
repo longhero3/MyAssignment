@@ -2,7 +2,7 @@
 <ul class="nav nav-pills">
   <% @categories.each do |category| %>
     
-    <li><%= link_to store_path(:category => category.id) do %>
+    <li><%= link_to category_filter_path(:category => category.id) do %>
           <%= category.name %>
           <span class="badge"><%= category.book_categories.count %></span>
         <% end %>
@@ -17,7 +17,6 @@
   </li>
 </ul>
 </div>
-
 <div class="row">
   <div class="col-md-6 col-md-offset-5">
     <%= will_paginate @books %>

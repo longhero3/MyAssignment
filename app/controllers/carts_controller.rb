@@ -1,4 +1,5 @@
 class CartsController < ApplicationController
+  skip_before_filter :authenticate
   # GET /carts
   # GET /carts.json
   def index

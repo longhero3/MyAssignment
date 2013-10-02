@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
+  before_filter :authenticate
+  helper_method :current_user
   protect_from_forgery
+
   private 
 
   	def current_category
@@ -16,5 +19,20 @@ class ApplicationController < ActionController::Base
   		cart = Cart.create
   		session[:cart_id] = cart.id
   		cart
-  	end
+  	end  
+
+    def current_user
+      User.find(session[:user_id])
+    rescue ActiveRecord::RecordNotFound
+      nil
+    end
+
+  protected 
+
+    def authenticate
+      unless User.find_by_id(session[:user_id])
+        redirect_to login_url, :notice => "Please log in"
+      end
+    end
+
 end

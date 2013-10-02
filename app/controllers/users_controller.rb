@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
+  skip_before_filter :authenticate
   def index
     @cart = current_cart
     @users = User.all
@@ -43,7 +44,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @cart = current_cart
-    @user = User.new(params[:user])
+    @user = User.addUser(params[:user])
     respond_to do |format|
       if @user.save
         flash[:notice] = "Successfully registered"

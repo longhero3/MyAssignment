@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131002023602) do
+ActiveRecord::Schema.define(:version => 20131002050018) do
 
   create_table "book_categories", :force => true do |t|
     t.integer  "book_id"
@@ -81,11 +81,12 @@ ActiveRecord::Schema.define(:version => 20131002023602) do
     t.string   "full_name"
     t.date     "birthday"
     t.date     "create_date"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.string   "username"
     t.string   "salt"
     t.string   "hash_password"
+    t.boolean  "admin",         :default => false
   end
 
 end
