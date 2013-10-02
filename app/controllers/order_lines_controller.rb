@@ -1,6 +1,7 @@
 class OrderLinesController < ApplicationController
   # GET /order_lines
   # GET /order_lines.json
+  skip_before_filter :authenticate
   def index
     @order_lines = OrderLine.all
 

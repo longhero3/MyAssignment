@@ -1,4 +1,5 @@
 class StoreController < ApplicationController
+  skip_before_filter :authenticate
   def index
   	if params[:category]
   		session[:category_id] = params[:category]
