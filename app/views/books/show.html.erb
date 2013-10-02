@@ -52,9 +52,11 @@
       <div class="col-md-5">
         <%= f.text_area :content, :class => "col-md-11", :placeholder => "Enter your comment", :rows => 5 %>
       </div>
+      <% if !@book.is_commented(session[:user_id]) %>
       <div class="col-md-3">
         <%= f.select :rating, (1..5) %>
       </div>
+      <% end %>
       <div class="col-md-4">
         <%= f.submit :Post, :class => "btn btn-info" %>
       </div>

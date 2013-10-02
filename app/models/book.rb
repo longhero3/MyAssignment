@@ -26,6 +26,14 @@ class Book < ActiveRecord::Base
   # def happened_at_is_valid_datetime
   #   errors.add(:published_date, 'must be a valid datetime') if ((DateTime.parse(published_date) rescue ArgumentError) == ArgumentError)
   # end
+  def is_commented(user_id)
+    comment=comments.find_by_user_id(user_id)
+    if comment
+      return true
+    else
+      return false
+    end
+  end
 
   def self.search(input)
     if input
@@ -49,5 +57,7 @@ class Book < ActiveRecord::Base
       return false
     end
   end
+
+  
 
 end
