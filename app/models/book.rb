@@ -37,7 +37,7 @@ class Book < ActiveRecord::Base
 
   def self.search(input)
     if input
-      where('title LIKE ?', "%#{input}%")
+      where('LOWER(title) LIKE LOWER(?) OR LOWER(author) LIKE LOWER(?)', "%#{input}%", "%#{input}%")
     else
       scoped
     end
