@@ -31,9 +31,10 @@ MyAssignment::Application.routes.draw do
 
 
   resources :users
-
-  devise_for :users
-
+  get 'users/password/new', :to => "my_devise/passwords#new"
+  # devise_for :users
+  devise_for :users, :controllers => {:passwords => "my_devise/passwords" }
+  
 
   get "category/:category", :to => "store#index", :as => 'category_filter'
   post "order_lines/book/:book_id", :to => "order_lines#create", :as => 'add_to_cart'

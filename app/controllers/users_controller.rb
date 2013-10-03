@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @cart = current_cart
     @user = User.confirm_user(params[:confirmation_token])
 
     respond_to do |format|
@@ -42,6 +43,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @cart = current_cart
     @user = User.find(params[:id])
   end
 
