@@ -9,6 +9,7 @@ gem 'pg'
 gem 'will_paginate', '~> 3.0'
 gem 'bcrypt-ruby', :require => 'bcrypt' 
 gem 'devise'
+gem "recaptcha", :require => "recaptcha/rails"
 
 
 # Gems used only for assets and not required

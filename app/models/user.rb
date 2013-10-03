@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   after_save :clear_password
 
   attr_accessible :email, :birthday, :create_date, :full_name, :password, :phone, 
-  	:username, :password_confirmation, :admin, :confirmation_token
+  	:username, :password_confirmation, :admin, :confirmation_token, :fail_attempts
   attr_accessor :password
 
   has_many :orders, dependent: :destroy
@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
     typed_hashed_password = BCrypt::Engine.hash_secret(password,user.salt)
     if user && user.hash_password == typed_hashed_password
       user
+    elsif user && user.hash_password != typed_hashed_password
+      user.fail_attempts -= 1
+      user.save
+      nil
     else
       nil
     end
