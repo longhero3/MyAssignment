@@ -32,6 +32,8 @@ MyAssignment::Application.routes.draw do
 
   resources :users
 
+  devise_for :users
+
 
   get "category/:category", :to => "store#index", :as => 'category_filter'
   post "order_lines/book/:book_id", :to => "order_lines#create", :as => 'add_to_cart'

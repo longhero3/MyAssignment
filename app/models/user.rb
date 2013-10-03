@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   after_save :clear_password
 
   attr_accessible :email, :birthday, :create_date, :full_name, :password, :phone, 
-  	:username, :password_confirmation, :admin
+  	:username, :password_confirmation, :admin, :confirmation_token
   attr_accessor :password
 
   has_many :orders, dependent: :destroy
@@ -35,6 +35,23 @@ class User < ActiveRecord::Base
       nil
     end
   end
+
+  def is_activated
+    return true if confirmed_at != nil
+    return false
+  end
+
+  def self.confirm_user(confirm_token)
+    user = find_by_confirmation_token(confirm_token)
+    if user 
+      user.confirmed_at = DateTime.now
+      user.save
+      return user
+    else
+      return nil
+    end 
+  end
+
 
   def self.addUser(pending_user_params)
 

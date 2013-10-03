@@ -7,10 +7,14 @@ class SessionsController < ApplicationController
   def create
   	@cart = current_cart
   	user = User.authenticate(params[:username],params[:password])
-  	if user
+  	if user && user.is_activated
   		session[:user_id] = user.id
   		redirect_to store_url, :notice => "You are Logged In"
-  	else
+  	elsif user && !user.is_activated
+      flash[:alert] = "Your account has not been activated"
+      flash[:color] = "invalid"
+      render "new"
+    else
   		flash[:alert] = "Wrong Username or Password"
       flash[:color] = "invalid"
       render "new"
