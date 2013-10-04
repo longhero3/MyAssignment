@@ -51,8 +51,6 @@ describe Book do
     expect(book.average_rating).to eq(3)
   end
 
-  it 'should return the whole list of book when the input is empty' do
-    books.search("").should == books.count
-  end
 
 end
+

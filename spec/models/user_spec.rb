@@ -1,13 +1,11 @@
 require 'spec_helper'
 
 describe User do
-  let(:user) { FactoryGirl.create :user}
-  users = FactoryGirl.create_list(:user,20)
-
+  let(:user) { FactoryGirl.create :user }
   describe 'validations' do
     it{ should have_many(:orders)}
     it{ should have_many(:comments)}
-
+    
     it{ should validate_presence_of :username}
     it{ should validate_presence_of :full_name}
     it{ should validate_presence_of :email}
@@ -20,6 +18,5 @@ describe User do
       user.email = "aloha@yahoo.com"
       user.should be_valid
     end
-
-
+  end
 end
