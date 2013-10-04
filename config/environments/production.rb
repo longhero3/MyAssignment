@@ -60,8 +60,19 @@ MyAssignment::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-
+  config.log_level = :warn
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :authentication => :login,
+    :user_name => "s3324816@gmail.com",
+    :password => "13091945"
+  }
+
+  config.action_mailer.default_url_options = { :host => 'http://gentle-tor-9537.herokuapp.com' }
 end
