@@ -71,7 +71,7 @@ MyAssignment::Application.configure do
     :port => 587,
     :authentication => :login,
     :user_name => "s3324816@gmail.com",
-    :password => "13091945"
+    :password => "Rm!t19910918"
   }
 
   config.action_mailer.default_url_options = { :host => 'http://gentle-tor-9537.herokuapp.com' }
