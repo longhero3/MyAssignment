@@ -69,7 +69,7 @@ MyAssignment::Application.configure do
     :enable_starttls_auto => true,
     :address => "smtp.gmail.com",
     :port => 587,
-    :authentication => "plain",
+    :authentication => :login,
     :user_name => "s3324816@gmail.com",
     :password => "13091945"
   }
