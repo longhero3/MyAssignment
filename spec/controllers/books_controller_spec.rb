@@ -23,43 +23,43 @@ describe BooksController do
   # This should return the minimal set of attributes required to create a valid
   # Book. As you add validations to Book, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {  } }
+  let(:valid_attributes) {{}}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # BooksController. Be sure to keep this updated too.
   let(:valid_session) { {} }
-  let(:book) { FactoryGirl.create :book }
-  let(:books) { FactoryGirl.create_list :books}
-  describe "GET index" do
+  books = Book.all
+  book = FactoryGirl.create(:book)
+  describe "GET #index" do
     it "assigns all books as @books" do
       get :index, {}, valid_session
       assigns(:books).should eq([books])
     end
   end
 
-  describe "GET show" do
+  describe "GET #show" do
     it "assigns the requested book as @book" do
       get :show, {:id => book.to_param}, valid_session
       assigns(:book).should eq(book)
     end
   end
 
-  describe "GET new" do
+  describe "GET #new" do
     it "assigns a new book as @book" do
       get :new, {}, valid_session
       assigns(:book).should be_a_new(Book)
     end
   end
 
-  describe "GET edit" do
+  describe "GET #edit" do
     it "assigns the requested book as @book" do
-      get :edit, {:id => book.to_param}, valid_session
+      get :edit, {:id => book.id}, valid_session
       assigns(:book).should eq(book)
     end
   end
 
-  describe "POST create" do
+  describe "POST #create" do
     describe "with valid params" do
       it "creates a new Book" do
         expect {
@@ -96,7 +96,7 @@ describe BooksController do
     end
   end
 
-  describe "PUT update" do
+  describe "PUT #{}update" do
     describe "with valid params" do
       it "updates the requested book" do
         book = Book.create! valid_attributes

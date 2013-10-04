@@ -2,6 +2,7 @@ class Book < ActiveRecord::Base
   attr_accessible :title, :author, :description, 
   	:img_url, :price, :published_date, :publisher, 
   	:rating_count, :total_rating_value
+
   has_many :comments
   has_many :order_lines
   has_many :book_categories
@@ -35,11 +36,13 @@ class Book < ActiveRecord::Base
     end
   end
 
-  def self.search(input)
-    if input
-      where('LOWER(title) LIKE LOWER(?) OR LOWER(author) LIKE LOWER(?)', "%#{input}%", "%#{input}%")
-    else
-      scoped
+  class << self
+    def search(input)
+      if input
+        where('LOWER(title) LIKE LOWER(?) OR LOWER(author) LIKE LOWER(?)', "%#{input}%", "%#{input}%")
+      else
+        scoped
+      end
     end
   end
 

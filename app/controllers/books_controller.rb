@@ -2,6 +2,7 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
+    @cart = current_cart
     @books = Book.all
 
     respond_to do |format|

@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   EMAIL_REGULAR_EXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
   PHONE_EXP = /^[0-9]+$/i
   validates :username, :presence => true, :uniqueness => true
+  validates :full_name, :presence => true
   validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGULAR_EXP
   validates :password, :confirmation => true
   validates :phone, :presence => true, :format => PHONE_EXP
