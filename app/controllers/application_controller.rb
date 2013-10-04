@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_filter :authenticate
   helper_method :current_user
+  helper_method :current_cart
   protect_from_forgery
 
   private 

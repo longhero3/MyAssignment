@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @cart = current_cart
-    @user = User.find(params[:id])
+    @user = User.find_by_reset_password_token(:reset_password_token)
   end
 
   # POST /users

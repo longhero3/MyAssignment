@@ -27,9 +27,7 @@
           		<li><%= link_to "Register", new_user_path %></li>
 					</ul>
 					<div id="cart">
-						<% if @cart %> 
-						  <%= render(@cart) %>
-						<% end %>
+						   <%= render 'carts/cart', :object => @cart %>
 					</div>
 				</div>
 				<% if notice %>
