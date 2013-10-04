@@ -63,6 +63,8 @@ module MyAssignment
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.assets.initialize_on_precompile = false
+
     ActionDispatch::Callbacks.after do
     # Reload the factories
     return unless (Rails.env.development? || Rails.env.test?)
