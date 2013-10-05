@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Book do
 
   let(:book) { FactoryGirl.create :book }
-  books =  FactoryGirl.create_list(:book,20)
+  books =  FactoryGirl.create_list(:book,2)
   describe 'validations' do
     it { should have_many(:comments)}
     it { should have_many(:order_lines)}

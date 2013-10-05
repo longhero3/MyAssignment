@@ -31,9 +31,20 @@ class ApplicationController < ActionController::Base
   protected 
 
     def authenticate
+      set_return_point(request.url,true)
       unless User.find_by_id(session[:user_id])
         redirect_to login_url, :notice => "Please log in"
       end
+    end
+
+    def set_return_point(path, overwrite = false)
+      if overwrite or session[:return_point].blank?
+        session[:return_point] = path
+      end
+    end
+
+    def return_point
+      session[:return_point] ? session[:return_point] : store_path
     end
 
 end

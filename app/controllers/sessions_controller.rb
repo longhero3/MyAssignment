@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
       render "new"
     else
       session[:user_id] = user.id
-      redirect_to store_url, :notice => "You are Logged In"
+      redirect_to return_point, :notice => "You are Logged In"
     end
 
       
