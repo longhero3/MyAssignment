@@ -1,0 +1,36 @@
+/ display book list
+.row
+  .col-md-11
+    .row
+      .col-md-8
+        %h4
+          %strong= book.title
+    .row
+      .col-md-3
+        = link_to add_to_cart_path(book_id: book.id), :class => "thumbnail", :remote => true, :method => 'POST' do
+          = image_tag(book.img_url, :size => "260x180")
+      .col-md-9
+        %p
+          = sanitize(book.description)
+        %p= link_to "Show Details", book_path(:id => book.id), method: :get, :class => 'btn btn-success'
+        = link_to "Add to Cart", add_to_cart_path(book_id: book.id), :class => 'btn btn-warning', :method => 'POST', :remote => true
+    .row
+      .col-md-8
+        %p
+        %p
+          %i.glyphicon.glyphicon-user
+          Writen By
+          %strong= book.author
+          |
+          %i.glyphicon.glyphicon-user
+          Published By
+          %strong= book.publisher
+          |
+          %i.glyphicon.glyphicon-comment
+          Rating Counts
+          %strong= book.rating_count
+          |
+          %i.glyphicon.glyphicon-comment
+          Book ID
+          %strong= book.id
+%hr/

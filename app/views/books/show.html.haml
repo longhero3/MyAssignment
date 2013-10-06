@@ -1,0 +1,46 @@
+%p#notice= notice
+= image_tag(@book.img_url)
+%p
+  %b title:
+  = @book. title
+%p
+  %b Description:
+  = sanitize(@book.description)
+%p
+  %b Author:
+  = @book.author
+%p
+  %b Publisher:
+  = @book.publisher
+%p
+  %b Published date:
+  = @book.published_date
+%p
+  %b Price:
+  = @book.price
+%p
+  %b Total rating value:
+  = @book.total_rating_value
+%p
+  %b Rating count:
+  = @book.rating_count
+%p
+  %b Average Rating:
+  = @book.average_rating
+.well
+  .row
+    = form_for :comment, :url => {:controller => 'comments', :action => 'create'} do |f|
+      .col-md-5
+        = f.text_area :content, :class => "col-md-11", :placeholder => "Enter your comment", :rows => 5
+      - if !@book.is_commented(session[:user_id])
+        .col-md-3
+          = f.select :rating, (1..5)
+      .col-md-4
+        = f.submit :Post, :class => "btn btn-info"
+      = f.hidden_field :user_id, :value => session[:user_id]
+      = f.hidden_field :book_id, :value => @book.id
+      = f.hidden_field :comment_date, :value => Time.current.to_date
+%ul.thumbnails
+  / Display comments
+  = render(@book.comments)
+= link_to 'Back', store_path

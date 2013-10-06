@@ -1,0 +1,19 @@
+%p#notice= notice
+%p
+  %b rating:
+  = @comment. rating
+%p
+  %b Content:
+  = @comment.content
+%p
+  %b User:
+  = @comment.user_id
+%p
+  %b Book:
+  = @comment.book_id
+%p
+  %b Comment date:
+  = @comment.comment_date
+= link_to 'Edit', edit_comment_path(@comment)
+|
+\#{link_to 'Back', comments_path}

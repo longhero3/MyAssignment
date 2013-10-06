@@ -1,0 +1,19 @@
+= form_for(@book_category) do |f|
+  - if @book_category.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@book_category.errors.count, "error")
+        prohibited this book_category from being saved:
+      %ul
+        - @book_category.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :book_id
+    %br/
+    = f.number_field :book_id
+  .field
+    = f.label :category_id
+    %br/
+    = f.number_field :category_id
+  .actions
+    = f.submit

@@ -60,12 +60,12 @@ describe BooksController do
     end
   end
 
-  # describe "GET #edit" do
-  #   it "assigns the requested book as @book" do
-  #     get :edit, {:id => book.id}, valid_session
-  #     assigns(:book).should eq(book)
-  #   end
-  # end
+  describe "GET #edit" do
+    it "assigns the requested book as @book" do
+      get :edit, {:id => book.id}, valid_session
+      assigns(:book).should eq(book)
+    end
+  end
 
   # describe "POST #create" do
   #   describe "with valid params" do

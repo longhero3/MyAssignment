@@ -1,0 +1,9 @@
+%tr
+  %td
+    = order_line.quantity
+    x
+  %td= truncate order_line.book.title, :length => 7
+  %td= number_to_currency(order_line.book.price)
+  %td= number_to_currency(order_line.total_price)
+  %td= button_to "+", order_lines_path(book_id: order_line.book), method: :post, :remote => true
+  %td= button_to "-", order_line_path(order_line.book_id), method: :delete, :remote => true

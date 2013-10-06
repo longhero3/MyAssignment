@@ -1,0 +1,30 @@
+%h1 Listing users
+%table.table.table-striped.table-condensed
+  %tr
+    %th email
+    %th Username
+    %th Phone
+    %th Full name
+    %th
+      Admin
+    %th Birthday
+    %th Create date
+    %th Confirmed at
+    %th
+    %th
+    %th
+  - @users.each do |user|
+    %tr
+      %td= user. email
+      %td= user.username
+      %td= user.phone
+      %td= user.full_name
+      %td= user.admin
+      %td= user.birthday
+      %td= user.create_date
+      %td= user.confirmed_at
+      %td= link_to 'Show', user, :class => "btn btn-primary btn-xs"
+      %td= link_to 'Edit', edit_user_path(user), :class => "btn btn-warning btn-xs "
+      %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-xs"
+%br/
+= link_to 'New User', new_user_path

@@ -1,0 +1,10 @@
+%li.col-md-5.clearfix
+  .thumbnail.clearfix
+    .pull-left
+      %p
+        Rating:
+        %strong
+          = comment.rating
+      %h4
+        = comment.user.full_name
+      %small= comment.content

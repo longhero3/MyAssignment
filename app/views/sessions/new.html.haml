@@ -1,0 +1,20 @@
+%h1 Log in
+= form_tag login_path, :method => 'post' do |f|
+  .col-md-6.col-md-offset-3
+    .input-group
+      %span.input-group-addon Username
+      = text_field_tag :username, params[:username], :class => "form-control", :placeholder => "Username"
+    %br/
+  .col-md-6.col-md-offset-3
+    .input-group
+      %span.input-group-addon Password
+      = password_field_tag :password, params[:password], :class => "form-control", :placeholder => "Password"
+    %br/
+  - if session[:fail_attempts_remain] <= 0
+    .col-md-6.col-md-offset-3
+      .input-group
+        %span.input-group-addon Captcha
+        = recaptcha_tags
+      %br/
+  .col-md-7.col-md-offset-5
+    = submit_tag "Log in", :class => "btn btn-success"

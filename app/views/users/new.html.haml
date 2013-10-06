@@ -1,0 +1,53 @@
+= form_for :user, :url => {:controller => 'users', :action => 'create'}  do |f|
+  %h1 Signup Form
+  .col-md-6.col-md-offset-3
+    .input-group
+      / Username
+      %span.input-group-addon Username
+      = f.text_field :username, :placeholder => "Username", :class => "form-control"
+    %br/
+  .col-md-6.col-md-offset-3
+    .input-group
+      / Email
+      %span.input-group-addon Email
+      = f.text_field :email, :placeholder => "Email", :class => "form-control"
+    %br/
+  .col-md-6.col-md-offset-3
+    .input-group
+      / Password
+      %span.input-group-addon Password
+      = f.password_field :password, :placeholder => "Password", :class => "form-control"
+    %br/
+  .col-md-6.col-md-offset-3
+    .input-group
+      / Password confirmation
+      %span.input-group-addon Password Confirm
+      = f.password_field :password_confirmation, :placeholder => "Password Confirmation", :class => "form-control"
+    %br/
+  .col-md-6.col-md-offset-3
+    .input-group
+      / Full Name
+      %span.input-group-addon Full Name
+      = f.text_field :full_name, :placeholder => "Full Name", :class => "form-control"
+    %br/
+  .col-md-6.col-md-offset-3
+    .input-group
+      / Birthday
+      %span.input-group-addon Birthday
+      = f.date_select :birthday, :start_year => 1970, :end_year => 2013, :class => "form-controls"
+    %br/
+  .col-md-6.col-md-offset-3
+    .input-group
+      / Phone
+      %span.input-group-addon Phone
+      = f.text_field :phone, :placeholder => "Phone", :class => "form-control"
+    %br/
+  / Button
+  .col-md-7.col-md-offset-5
+    = f.submit :Signup, :class => "btn btn-success"
+  - if @user.errors.any?
+    %ul.Signup_Errors
+      - for message_error in @user.errors.full_messages
+        %li
+          * #{message_error}
+  = f.hidden_field :create_date, :value => Time.current.to_date

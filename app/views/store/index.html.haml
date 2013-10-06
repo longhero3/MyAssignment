@@ -1,0 +1,16 @@
+.well
+  %ul.nav.nav-pills
+    - @categories.each do |category|
+      %li
+        = link_to category_filter_path(:category => category.id) do
+          = category.name
+          %span.badge= category.book_categories.count
+    %li
+      .input-group
+        = form_tag store_path, :method => 'get', :id => "books_search" do
+          = text_field_tag :search, params[:search] , :class => 'form-control', :placeholder => "Enter Search Keywords"
+.row
+  .col-md-6.col-md-offset-5
+    = will_paginate @books
+#book-content
+  = render @books

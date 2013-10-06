@@ -1,0 +1,16 @@
+%p#notice= notice
+%p
+  %b order:
+  = @order_line. order_id
+%p
+  %b Book:
+  = @order_line.book_id
+%p
+  %b Unit price:
+  = @order_line.unit_price
+%p
+  %b Quantity:
+  = @order_line.quantity
+= link_to 'Edit', edit_order_line_path(@order_line)
+|
+\#{link_to 'Back', order_lines_path}

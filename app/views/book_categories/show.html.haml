@@ -1,0 +1,10 @@
+%p#notice= notice
+%p
+  %b Book:
+  = @book_category.book_id
+%p
+  %b Category:
+  = @book_category.category_id
+= link_to 'Edit', edit_book_category_path(@book_category)
+|
+\#{link_to 'Back', book_categories_path}

@@ -1,0 +1,31 @@
+%h1 Listing books
+%table
+  %tr
+    %th title
+    %th Description
+    %th Author
+    %th Publisher
+    %th Published date
+    %th Price
+    %th Img url
+    %th Total rating value
+    %th Rating count
+    %th
+    %th
+    %th
+  - @books.each do |book|
+    %tr
+      %td= book. title
+      %td= sanitize(book.description)
+      %td= book.author
+      %td= book.publisher
+      %td= book.published_date
+      %td= book.price
+      %td= book.img_url
+      %td= book.total_rating_value
+      %td= book.rating_count
+      %td= link_to 'Show', book
+      %td= link_to 'Edit', edit_book_path(book)
+      %td= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Book', new_book_path
