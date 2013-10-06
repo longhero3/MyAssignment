@@ -28,17 +28,16 @@ describe BooksController do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # BooksController. Be sure to keep this updated too.
-  user = FactoryGirl.create(:user)
+  let(:user) { FactoryGirl.create(:user) }
   let(:valid_session) { {:user_id => user.id} }
-
+  #let(:book) { FactoryGirl.create(:book) }
   #book = FactoryGirl.create(:book)
   describe "GET #index" do
     it "populates book data" do 
-      book = Book.new(FactoryGirl.attributes_for(:book))
-      book.save
-      @books = Book.all
-      get :index
-      @books.should eq([book])
+      
+      book = FactoryGirl.create(:book)
+      get :index,{}, valid_session
+      assigns(:books).should eq([book])
     end
     it "renders the :index view" do 
       get :index, {}, valid_session
@@ -46,19 +45,20 @@ describe BooksController do
     end
   end
 
-  # describe "GET #show" do
-  #   it "assigns the requested book as @book" do
-  #     get :show, {:id => book.to_param}, valid_session
-  #     assigns(:book).should eq(book)
-  #   end
-  # end
+  describe "GET #show" do
+    it "assigns the requested book as @book" do
+      book = FactoryGirl.create(:book)
+      get :show, {:id => book.id}, valid_session
+      assigns(:book).should eq(book)
+    end
+  end
 
-  # describe "GET #new" do
-  #   it "assigns a new book as @book" do
-  #     get :new, {}, valid_session
-  #     assigns(:book).should be_a_new(Book)
-  #   end
-  # end
+  describe "GET #new" do
+    it "assigns a new book as @book" do
+      get :new, {}, valid_session
+      assigns(:book).should be_a_new(Book)
+    end
+  end
 
   # describe "GET #edit" do
   #   it "assigns the requested book as @book" do
