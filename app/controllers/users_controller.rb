@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @cart = current_cart
-    @user = User.find_by_reset_password_token(:reset_password_token)
+    @user = User.find(params[:id])
   end
 
   # POST /users
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to store_url, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

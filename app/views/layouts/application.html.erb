@@ -7,40 +7,39 @@
   <%= csrf_meta_tags %>
 </head>
 <body id="<%= controller.controller_name %>">
-	<div class="row">
-		<div class="col-md-3">
-			<div class="sidebar-nav" style="position: fixed">
-				<div class="well" style="width:300px; padding: 8px 0;">
-					<ul class="nav nav-list"> 
-						<% if current_user %>
-						<!-- Logged in user -->
-		  				<li class="nav-header"><strong>Welcome, <%= current_user.username %></strong></li>	
-		  				<li><%= link_to "Edit My Profile", edit_user_path(current_user.id) %></li> 
-		  				<li><%= link_to "Logout", logout_path, :method => "post" %></li>
-		  			<% else %>
-		  				<!-- Anonymous user -->
-		  				<li class="nav-header"><strong>Welcome</strong></li>
-		  				<li><%= link_to "Login", login_path %></li>	
-		  				<li><%= link_to "Forgot Password?", new_user_password_path, :method => "get" %></li>
-		  			<% end %> 
-		  				<li><%= link_to "Home", store_path %></li>      	  			  					
-          		<li><%= link_to "Register", new_user_path %></li>
-					</ul>
-					<div id="cart">
-						   <%= render 'carts/cart', :object => @cart %>
-					</div>
-				</div>
-				<% if notice %>
-					<div class="alert alert-success"><%= notice %></div>
-				<% end %>
-				<% if alert %>
-					<div class="alert alert-danger"><%= alert %></div>
-				<% end %>
-			</div>
-		</div>
-		<div class="col-md-9" id="main-content">
-			<%= yield %>
-		</div>
-	</div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar-nav" style="position: fixed">
+        <div class="well" style="width:300px; padding: 8px 0;">
+          <ul class="nav nav-list"> 
+            <% if current_user %>
+            <!-- Logged in user -->
+              <li class="nav-header"><strong>Welcome, <%= current_user.username %></strong></li>  
+              <li><%= link_to "My Profile", edit_user_path(current_user.id) %></li> 
+              <li><%= link_to "Logout", logout_path, :method => "post" %></li>
+            <% else %>
+              <!-- Anonymous user -->
+              <li class="nav-header"><strong>Welcome</strong></li>
+              <li><%= link_to "Login", login_path %></li> 
+            <% end %> 
+              <li><%= link_to "Home", store_path %></li>                            
+              <li><%= link_to "Register", new_user_path %></li>
+          </ul>
+          <div id="cart">
+               <%= render 'carts/cart', :object => @cart %>
+          </div>
+        </div>
+        <% if notice %>
+          <div class="alert alert-success"><%= notice %></div>
+        <% end %>
+        <% if alert %>
+          <div class="alert alert-danger"><%= alert %></div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-9" id="main-content">
+      <%= yield %>
+    </div>
+  </div>
 </body>
 </html>
