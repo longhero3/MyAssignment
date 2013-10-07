@@ -73,8 +73,7 @@ class CartsController < ApplicationController
   # DELETE /carts/1
   # DELETE /carts/1.json
   def destroy
-    @cart = current_cart
-    @cart.destroy
+    current_cart.destroy
     respond_to do |format|
       format.html { redirect_to store_url }
       format.js
