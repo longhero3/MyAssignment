@@ -61,5 +61,74 @@ describe CategoriesController do
         response.should redirect_to(categories_url)
       end
     end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved category as @category" do
+        Category.any_instance.stub(:save).and_return(false)
+        post :create, {:category => {} }, valid_session
+        assigns(:category).should be_a_new(Category)
+      end
+      it "re-render new template do" do
+        Category.any_instance.stub(:save).and_return(false)
+        post :create, {:category => {} }, valid_session
+        response.should render_template("new")
+      end
+    end
+  end
+
+  describe "PUT #update" do 
+    describe "with valid params" do
+      it "update the requested category" do
+        category = FactoryGirl.create(:category)
+        Category.any_instance.should_receive(:update_attributes).with({"name" => "Others" })
+        put :update, {:id => category.id, :category => { "name" => "Others" } }, valid_session 
+      end
+
+      it "assigns the requested category as @category" do 
+        category_attrs = FactoryGirl.attributes_for(:category)
+        category = FactoryGirl.create(:category)
+        put :update, {:id => category.id, :category => category_attrs }, valid_session
+        assigns(:category).should eq(category)
+      end
+
+      it "redirects to the categories url" do 
+        category_attrs = FactoryGirl.attributes_for(:category)
+        category = FactoryGirl.create(:category)
+        put :update, {:id => category.id, :category => category_attrs }, valid_session
+        response.should redirect_to(category)
+      end
+    end
+
+    describe "with invalid params" do 
+      it "assigns the category as @ category" do
+        category = FactoryGirl.create(:category)
+        # Trigger the behavior that occurs when invalid params are submitted
+        Category.any_instance.stub(:save).and_return(false)
+        put :update, {:id => category.id, :category => {} }, valid_session
+        assigns(:category).should eq(category)
+      end
+      it "re-renders the edit template" do 
+        category = FactoryGirl.create(:category)
+        # Trigger the behavior that occurs when invalid params are submitted
+        Category.any_instance.stub(:save).and_return(false)
+        put :update, {:id => category.id, :category => {} }, valid_session
+        response.should render_template :edit
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do 
+    it "destroys the requested category" do 
+      category = FactoryGirl.create(:category)
+      expect {
+        delete :destroy, { :id => category.id }, valid_session
+      }.to change(Category, :count).by(-1)
+    end
+
+    it "redirects to the category list" do 
+      category = FactoryGirl.create(:category)
+      delete :destroy, { :id => category.id}, valid_session
+      response.should redirect_to(categories_url)
+    end
   end
 end

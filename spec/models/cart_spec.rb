@@ -1,5 +1,12 @@
 require 'spec_helper'
 
 describe Cart do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:cart) { FactoryGirl.create(:cart) }
+  describe "validation" do 
+  	it{should have_many(:order_lines).dependent(:destroy)}
+  end
+
+  describe "class method tests" do
+  	
+  end
 end

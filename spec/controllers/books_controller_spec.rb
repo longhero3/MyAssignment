@@ -95,14 +95,14 @@ describe BooksController do
       it "assigns a newly created but unsaved book as @book" do
         # Trigger the behavior that occurs when invalid params are submitted
         Book.any_instance.stub(:save).and_return(false)
-        post :create, {:book => {  }}, valid_session
+        post :create, {:book => {} }, valid_session
         assigns(:book).should be_a_new(Book)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Book.any_instance.stub(:save).and_return(false)
-        post :create, {:book => {  }}, valid_session
+        post :create, {:book => {} }, valid_session
         response.should render_template("new")
       end
     end
