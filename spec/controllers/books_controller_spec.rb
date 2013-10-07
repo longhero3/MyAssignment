@@ -62,18 +62,20 @@ describe BooksController do
 
   describe "GET #edit" do
     it "assigns the requested book as @book" do
+      book = FactoryGirl.create(:book)
       get :edit, {:id => book.id}, valid_session
       assigns(:book).should eq(book)
     end
   end
 
-  # describe "POST #create" do
-  #   describe "with valid params" do
-  #     it "creates a new Book" do
-  #       expect {
-  #         post :create, {:book => book}, valid_session
-  #       }.to change(Book, :count).by(1)
-  #     end
+  describe "POST #create" do
+    describe "with valid params" do
+      it "creates a new Book" do
+        book = FactoryGirl.create(:book)
+        expect {
+          post :create, {:book => book}, valid_session
+        }.to change(Book, :count).by(1)
+      end
 
   #     it "assigns a newly created book as @book" do
   #       post :create, {:book => book}, valid_session
@@ -85,7 +87,7 @@ describe BooksController do
   #       post :create, {:book => book}, valid_session
   #       response.should redirect_to(books_url)
   #     end
-  #   end
+    end
 
   #   describe "with invalid params" do
   #     it "assigns a newly created but unsaved book as @book" do
@@ -101,8 +103,8 @@ describe BooksController do
   #       post :create, {:book => {  }}, valid_session
   #       response.should render_template("new")
   #     end
-  #   end
-  # end
+    # end
+  end
 
   # describe "PUT #{}update" do
   #   describe "with valid params" do
