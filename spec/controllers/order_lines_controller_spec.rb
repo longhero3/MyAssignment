@@ -28,22 +28,16 @@ describe OrderLinesController do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # OrderLinesController. Be sure to keep this updated too.
-  
-  let(:valid_session) { {} }
+  let(:current_cart) { FactoryGirl.create(:cart) }
+  let(:book) { FactoryGirl.create(:book) }
+  let(:valid_session) { {:cart_id => current_cart.id} }
 
   describe "GET index" do
     it "assigns all order_lines as @order_lines" do
-      order_line = OrderLine.create! valid_attributes
+      order_line = current_cart.add_book(book.id)
+      order_line.save
       get :index, {}, valid_session
       assigns(:order_lines).should eq([order_line])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested order_line as @order_line" do
-      order_line = OrderLine.create! valid_attributes
-      get :show, {:id => order_line.to_param}, valid_session
-      assigns(:order_line).should eq(order_line)
     end
   end
 
@@ -54,107 +48,55 @@ describe OrderLinesController do
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested order_line as @order_line" do
-      order_line = OrderLine.create! valid_attributes
-      get :edit, {:id => order_line.to_param}, valid_session
-      assigns(:order_line).should eq(order_line)
-    end
-  end
-
   describe "POST create" do
     describe "with valid params" do
       it "creates a new OrderLine" do
         expect {
-          post :create, {:order_line => valid_attributes}, valid_session
+          post :create, {:book_id => book.id}, valid_session
         }.to change(OrderLine, :count).by(1)
       end
 
+      it "adds quantity to the OrderLine" do 
+        post :create, {:book_id => book.id}, valid_session
+        post :create, {:book_id => book.id}, valid_session
+        expect(OrderLine.count).to eq(1)
+        expect(OrderLine.first.quantity).to eq(2)
+      end
+
       it "assigns a newly created order_line as @order_line" do
-        post :create, {:order_line => valid_attributes}, valid_session
+        post :create, {:book_id => book.id }, valid_session
         assigns(:order_line).should be_a(OrderLine)
         assigns(:order_line).should be_persisted
       end
 
       it "redirects to the created order_line" do
-        post :create, {:order_line => valid_attributes}, valid_session
-        response.should redirect_to(OrderLine.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved order_line as @order_line" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        OrderLine.any_instance.stub(:save).and_return(false)
-        post :create, {:order_line => {  }}, valid_session
-        assigns(:order_line).should be_a_new(OrderLine)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        OrderLine.any_instance.stub(:save).and_return(false)
-        post :create, {:order_line => {  }}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested order_line" do
-        order_line = OrderLine.create! valid_attributes
-        # Assuming there are no other order_lines in the database, this
-        # specifies that the OrderLine created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        OrderLine.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => order_line.to_param, :order_line => { "these" => "params" }}, valid_session
-      end
-
-      it "assigns the requested order_line as @order_line" do
-        order_line = OrderLine.create! valid_attributes
-        put :update, {:id => order_line.to_param, :order_line => valid_attributes}, valid_session
-        assigns(:order_line).should eq(order_line)
-      end
-
-      it "redirects to the order_line" do
-        order_line = OrderLine.create! valid_attributes
-        put :update, {:id => order_line.to_param, :order_line => valid_attributes}, valid_session
-        response.should redirect_to(order_line)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the order_line as @order_line" do
-        order_line = OrderLine.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        OrderLine.any_instance.stub(:save).and_return(false)
-        put :update, {:id => order_line.to_param, :order_line => {  }}, valid_session
-        assigns(:order_line).should eq(order_line)
-      end
-
-      it "re-renders the 'edit' template" do
-        order_line = OrderLine.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        OrderLine.any_instance.stub(:save).and_return(false)
-        put :update, {:id => order_line.to_param, :order_line => {  }}, valid_session
-        response.should render_template("edit")
+        post :create, {:book_id => book.id }, valid_session
+        response.should redirect_to(store_url)
       end
     end
   end
 
   describe "DELETE destroy" do
     it "destroys the requested order_line" do
-      order_line = OrderLine.create! valid_attributes
+      order_line = current_cart.add_book(book.id)
       expect {
-        delete :destroy, {:id => order_line.to_param}, valid_session
+        delete :destroy, {:id => order_line.book_id}, valid_session
       }.to change(OrderLine, :count).by(-1)
     end
 
+    it "reduce the requested order_line by one" do 
+      order_line = current_cart.add_book(book.id)
+      order_line.save
+      current_cart.add_book(book.id).save
+      current_cart.add_book(book.id).save
+      delete :destroy, {:id => order_line.book_id}, valid_session
+      expect(OrderLine.first.quantity).to eq(2)
+    end
+
     it "redirects to the order_lines list" do
-      order_line = OrderLine.create! valid_attributes
-      delete :destroy, {:id => order_line.to_param}, valid_session
-      response.should redirect_to(order_lines_url)
+      order_line = current_cart.add_book(book.id)
+      delete :destroy, {:id => order_line.book_id}, valid_session
+      response.should redirect_to(store_url)
     end
   end
 
