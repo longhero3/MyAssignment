@@ -11,6 +11,6 @@
           = text_field_tag :search, params[:search] , :class => 'form-control', :placeholder => "Enter Search Keywords"
 .row
   .col-md-6.col-md-offset-5
-    = will_paginate @books
+    = will_paginate @books, :renderer => WillPaginate::ActionView::LinkRenderer
 #book-content
   = render @books

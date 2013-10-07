@@ -36,6 +36,8 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-will_paginate (0.0.10)
+      will_paginate
     builder (3.0.4)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -199,6 +201,7 @@ DEPENDENCIES
   bcrypt-ruby
   better_errors
   binding_of_caller
+  bootstrap-will_paginate
   coffee-rails (~> 3.2.1)
   cucumber-rails
   database_cleaner
@@ -216,4 +219,3 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   shoulda-matchers
   uglifier (>= 1.0.3)
-  will_paginate (~> 3.0)

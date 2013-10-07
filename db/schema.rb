@@ -59,10 +59,10 @@ ActiveRecord::Schema.define(:version => 20131004041601) do
   create_table "order_lines", :force => true do |t|
     t.integer  "order_id"
     t.integer  "book_id"
-    t.decimal  "unit_price"
-    t.integer  "quantity"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.decimal  "unit_price", :default => 0.0
+    t.integer  "quantity",   :default => 0
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.integer  "cart_id"
   end
 

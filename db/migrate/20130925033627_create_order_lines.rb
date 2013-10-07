@@ -3,8 +3,8 @@ class CreateOrderLines < ActiveRecord::Migration
     create_table :order_lines do |t|
       t.integer :order_id
       t.integer :book_id
-      t.decimal :unit_price
-      t.integer :quantity
+      t.decimal :unit_price, :default => 0
+      t.integer :quantity, :default => 0
 
       t.timestamps
     end

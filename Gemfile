@@ -6,7 +6,7 @@ gem 'rails', '3.2.14'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem 'will_paginate', '~> 3.0'
+gem 'bootstrap-will_paginate'
 gem 'bcrypt-ruby', :require => 'bcrypt' 
 gem 'devise'
 gem "recaptcha", :require => "recaptcha/rails"
