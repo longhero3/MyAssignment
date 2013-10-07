@@ -23,25 +23,26 @@ describe UsersController do
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {  } }
+  let(:valid_attributes) { FactoryGirl.attributes_for(:user) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # UsersController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let(:user) {FactoryGirl.create(:user)}
+  let(:valid_session) { { :user_id => user.id } }
 
   describe "GET index" do
     it "assigns all users as @users" do
-      user = User.create! valid_attributes
+      # user = User.create! valid_attributes
       get :index, {}, valid_session
       assigns(:users).should eq([user])
     end
   end
 
   describe "GET show" do
-    it "assigns the requested user as @user" do
-      user = User.create! valid_attributes
-      get :show, {:id => user.to_param}, valid_session
+    it "user receives confirmation_token" do
+    
+      get :show, {:confirmation_token => user.confirmation_token}, valid_session
       assigns(:user).should eq(user)
     end
   end
@@ -55,8 +56,8 @@ describe UsersController do
 
   describe "GET edit" do
     it "assigns the requested user as @user" do
-      user = User.create! valid_attributes
-      get :edit, {:id => user.to_param}, valid_session
+      # user = User.create! valid_attributes
+      get :edit, { :id => user.to_param }, valid_session
       assigns(:user).should eq(user)
     end
   end
@@ -64,20 +65,23 @@ describe UsersController do
   describe "POST create" do
     describe "with valid params" do
       it "creates a new User" do
+        user_attrs = FactoryGirl.attributes_for(:user)
         expect {
-          post :create, {:user => valid_attributes}, valid_session
-        }.to change(User, :count).by(1)
+          post :create, { :user => user_attrs }, valid_session
+        }.to change(User, :count).by(2)
       end
 
       it "assigns a newly created user as @user" do
-        post :create, {:user => valid_attributes}, valid_session
+        user_attrs = FactoryGirl.attributes_for(:user)
+        post :create, {:user => user_attrs}, valid_session
         assigns(:user).should be_a(User)
         assigns(:user).should be_persisted
       end
 
-      it "redirects to the created user" do
-        post :create, {:user => valid_attributes}, valid_session
-        response.should redirect_to(User.last)
+      it "redirects to the store url" do
+        user_attrs = FactoryGirl.attributes_for(:user)
+        post :create, {:user => user_attrs}, valid_session
+        response.should redirect_to(store_url)
       end
     end
 
@@ -101,31 +105,32 @@ describe UsersController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested user" do
-        user = User.create! valid_attributes
+        # user = User.create! valid_attributes
         # Assuming there are no other users in the database, this
         # specifies that the User created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        User.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => user.to_param, :user => { "these" => "params" }}, valid_session
+        User.any_instance.should_receive(:update_attributes).with({ "phone" => "13422345" })
+        put :update, {:id => user.id, :user => { "phone" => "13422345" } }, valid_session
       end
 
       it "assigns the requested user as @user" do
-        user = User.create! valid_attributes
-        put :update, {:id => user.to_param, :user => valid_attributes}, valid_session
+        # user = User.create! valid_attributes
+
+        put :update, { :id => user.id, :user => { "phone" => "13422345" } }, valid_session
         assigns(:user).should eq(user)
       end
 
       it "redirects to the user" do
-        user = User.create! valid_attributes
-        put :update, {:id => user.to_param, :user => valid_attributes}, valid_session
-        response.should redirect_to(user)
+        # user = User.create! valid_attributes
+        put :update, { :id => user.id, :user => { "phone" => "13422345" } }, valid_session
+        response.should redirect_to(store_url)
       end
     end
 
     describe "with invalid params" do
       it "assigns the user as @user" do
-        user = User.create! valid_attributes
+        user.email = "sdfsdf"
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
         put :update, {:id => user.to_param, :user => {  }}, valid_session
@@ -144,14 +149,15 @@ describe UsersController do
 
   describe "DELETE destroy" do
     it "destroys the requested user" do
-      user = User.create! valid_attributes
+      #create a valid account
+      new_user = FactoryGirl.create(:user)
+      puts User.count
       expect {
-        delete :destroy, {:id => user.to_param}, valid_session
+        delete :destroy, {:id => new_user.id}, {}
       }.to change(User, :count).by(-1)
     end
 
     it "redirects to the users list" do
-      user = User.create! valid_attributes
       delete :destroy, {:id => user.to_param}, valid_session
       response.should redirect_to(users_url)
     end

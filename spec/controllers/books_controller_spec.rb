@@ -71,96 +71,102 @@ describe BooksController do
   describe "POST #create" do
     describe "with valid params" do
       it "creates a new Book" do
-        book = FactoryGirl.create(:book)
+        book = FactoryGirl.attributes_for(:book)
         expect {
           post :create, {:book => book}, valid_session
         }.to change(Book, :count).by(1)
       end
 
-  #     it "assigns a newly created book as @book" do
-  #       post :create, {:book => book}, valid_session
-  #       assigns(:book).should be_a(Book)
-  #       assigns(:book).should be_persisted
-  #     end
+      it "assigns a newly created book as @book" do
+        book = FactoryGirl.attributes_for(:book)
+        post :create, {:book => book}, valid_session
+        assigns(:book).should be_a(Book)
+        assigns(:book).should be_persisted
+      end
 
-  #     it "redirects to the created book" do
-  #       post :create, {:book => book}, valid_session
-  #       response.should redirect_to(books_url)
-  #     end
+      it "redirects to the created book" do
+        book = FactoryGirl.attributes_for(:book)
+        post :create, {:book => book}, valid_session
+        response.should redirect_to(books_url)
+      end
     end
 
-  #   describe "with invalid params" do
-  #     it "assigns a newly created but unsaved book as @book" do
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Book.any_instance.stub(:save).and_return(false)
-  #       post :create, {:book => {  }}, valid_session
-  #       assigns(:book).should be_a_new(Book)
-  #     end
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved book as @book" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Book.any_instance.stub(:save).and_return(false)
+        post :create, {:book => {  }}, valid_session
+        assigns(:book).should be_a_new(Book)
+      end
 
-  #     it "re-renders the 'new' template" do
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Book.any_instance.stub(:save).and_return(false)
-  #       post :create, {:book => {  }}, valid_session
-  #       response.should render_template("new")
-  #     end
-    # end
+      it "re-renders the 'new' template" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Book.any_instance.stub(:save).and_return(false)
+        post :create, {:book => {  }}, valid_session
+        response.should render_template("new")
+      end
+    end
   end
 
-  # describe "PUT #{}update" do
-  #   describe "with valid params" do
-  #     it "updates the requested book" do
-  #       book = Book.create! valid_attributes
-  #       # Assuming there are no other books in the database, this
-  #       # specifies that the Book created on the previous line
-  #       # receives the :update_attributes message with whatever params are
-  #       # submitted in the request.
-  #       Book.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-  #       put :update, {:id => book.to_param, :book => { "these" => "params" }}, valid_session
-  #     end
+  describe "PUT # update" do
+    describe "with valid params" do
+      it "updates the requested book" do
+        book = FactoryGirl.create(:book)
+        # Assuming there are no other books in the database, this
+        # specifies that the Book created on the previous line
+        # receives the :update_attributes message with whatever params are
+        # submitted in the request.
+        Book.any_instance.should_receive(:update_attributes).with({ "title" => "New Title" })
+        put :update, {:id => book.to_param, :book => { "title" => "New Title" }}, valid_session
+      end
 
-  #     it "assigns the requested book as @book" do
-  #       book = Book.create! valid_attributes
-  #       put :update, {:id => book.to_param, :book => valid_attributes}, valid_session
-  #       assigns(:book).should eq(book)
-  #     end
+      it "assigns the requested book as @book" do
+        book_attrs = FactoryGirl.attributes_for(:book)
+        book = FactoryGirl.create(:book)
+        put :update, {:id => book.id, :book => book_attrs}, valid_session
+        assigns(:book).should eq(book)
+      end
 
-  #     it "redirects to the book" do
-  #       book = Book.create! valid_attributes
-  #       put :update, {:id => book.to_param, :book => valid_attributes}, valid_session
-  #       response.should redirect_to(book)
-  #     end
-  #   end
+      it "redirects to the book" do
+        book_attrs = FactoryGirl.attributes_for(:book)
+        book = FactoryGirl.create(:book)
+        put :update, {:id => book.id, :book => book_attrs}, valid_session
+        response.should redirect_to(book)
+      end
+    end
 
-  #   describe "with invalid params" do
-  #     it "assigns the book as @book" do
-  #       book = Book.create! valid_attributes
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Book.any_instance.stub(:save).and_return(false)
-  #       put :update, {:id => book.to_param, :book => {  }}, valid_session
-  #       assigns(:book).should eq(book)
-  #     end
+    describe "with invalid params" do
+      it "assigns the book as @book" do
+        book = FactoryGirl.create(:book)
+        # Trigger the behavior that occurs when invalid params are submitted
+        Book.any_instance.stub(:save).and_return(false)
+        put :update, {:id => book.to_param, :book => {  }}, valid_session
+        assigns(:book).should eq(book)
+      end
 
-  #     it "re-renders the 'edit' template" do
-  #       book = Book.create! valid_attributes
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Book.any_instance.stub(:save).and_return(false)
-  #       put :update, {:id => book.to_param, :book => {  }}, valid_session
-  #       response.should render_template("edit")
-  #     end
-  #   end
-  # end
+      it "re-renders the 'edit' template" do
+        book = FactoryGirl.create(:book)
+        # Trigger the behavior that occurs when invalid params are submitted
+        Book.any_instance.stub(:save).and_return(false)
+        put :update, {:id => book.to_param, :book => {  }}, valid_session
+        response.should render_template("edit")
+      end
+    end
+  end
 
-  # describe "DELETE destroy" do
-  #   it "destroys the requested book" do
-  #     expect {
-  #       delete :destroy, {:id => book.to_param}, valid_session
-  #     }.to change(Book, :count).by(-1)
-  #   end
+  describe "DELETE # destroy" do
+    it "destroys the requested book" do
+      book = FactoryGirl.create(:book)
+      expect {
+        delete :destroy, {:id => book.to_param}, valid_session
+      }.to change(Book, :count).by(-1)
+    end
 
-  #   it "redirects to the books list" do
-  #     delete :destroy, {:id => book.to_param}, valid_session
-  #     response.should redirect_to(books_url)
-  #   end
-  # end
+    it "redirects to the books list" do
+      book = FactoryGirl.create(:book)
+      delete :destroy, {:id => book.to_param}, valid_session
+      response.should redirect_to(books_url)
+    end
+  end
 
 end

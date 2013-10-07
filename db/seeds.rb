@@ -309,29 +309,29 @@ Book.create(
 Category.delete_all
 Category.create(
   :name => 'Technology',
-  :sort_order => 'title')
+  :sort_order => 1)
 # . . .
 Category.create(
   :name => 'Fiction',
-  :sort_order => 'title')
+  :sort_order => 2)
 # . . .
 Category.create(
   :name => 'Business',
-  :sort_order => 'title')
+  :sort_order => 3)
 # . . .
 Category.create(
   :name => 'Entertainment',
-  :sort_order => 'title'
+  :sort_order => 4
 )
 # . . .
 Category.create(
   :name => 'Comic',
-  :sort_order => 'title'
+  :sort_order => 5
 )
 # . . .
 Category.create(
   :name => 'All',
-  :sort_order => 'title'
+  :sort_order => 6
 )
 # . . .
 BookCategory.delete_all

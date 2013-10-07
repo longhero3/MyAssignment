@@ -26,7 +26,8 @@
               %li= link_to "Home", store_path
               %li= link_to "Register", new_user_path
             #cart
-              = render 'carts/cart', :object => @cart
+              - if @cart.order_lines.count > 0
+                = render 'carts/cart', :object => @cart
           - if notice
             .alert.alert-success= notice
           - if alert

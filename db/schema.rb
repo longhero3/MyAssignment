@@ -28,10 +28,10 @@ ActiveRecord::Schema.define(:version => 20131004041601) do
     t.string   "published_date"
     t.decimal  "price"
     t.string   "img_url"
-    t.integer  "total_rating_value"
-    t.integer  "rating_count"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.integer  "total_rating_value", :default => 0
+    t.integer  "rating_count",       :default => 0
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "carts", :force => true do |t|
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20131004041601) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
-    t.string   "sort_order"
+    t.integer  "sort_order"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
