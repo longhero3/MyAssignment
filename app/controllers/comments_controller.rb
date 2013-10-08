@@ -1,7 +1,10 @@
 class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
+  before_filter :authenticate
+  before_filter :admin_authorize, :only => [:destroy, :index, :edit, :update]
   def index
+    @cart = current_cart
     @comments = Comment.all
 
     respond_to do |format|
@@ -13,6 +16,7 @@ class CommentsController < ApplicationController
   # GET /comments/1
   # GET /comments/1.json
   def show
+    @cart = current_cart
     @comment = Comment.find(params[:id])
 
     respond_to do |format|
@@ -24,6 +28,7 @@ class CommentsController < ApplicationController
   # GET /comments/new
   # GET /comments/new.json
   def new
+    @cart = current_cart
     @comment = Comment.new
 
     respond_to do |format|
@@ -34,6 +39,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    @cart = current_cart
     @comment = Comment.find(params[:id])
   end
 

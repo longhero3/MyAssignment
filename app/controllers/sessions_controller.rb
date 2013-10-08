@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-	skip_before_filter :authenticate
   def new
   	@cart = current_cart
     session[:fail_attempts_remain] = 3
@@ -39,14 +38,10 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to return_point, :notice => "You are Logged In"
     end
-
-      
-
-
   end
 
   def destroy
   	session[:user_id] = nil
-  	redirect_to store_url, :notice => " You've been Logged Out"
+  	redirect_to login_url, :notice => " You've been Logged Out"
   end
 end

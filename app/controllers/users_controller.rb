@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
-  before_filter :admin_authorize, :except => [:edit_profile, :change_password, :change_email, :update_password, :update_email, :update]
+  before_filter :authenticate, :except => [:create, :new]
+  before_filter :admin_authorize, :except => [:edit_profile, :change_password, :change_email, :update_password, :update_email, :update, :create, :new]
   def index
     @cart = current_cart
     @users = User.all

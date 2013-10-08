@@ -40,11 +40,10 @@ MyAssignment::Application.routes.draw do
     get "change_email", :to => :change_email
   end
   
-  get "category/:category", :to => "store#index", :as => 'category_filter'
+  get "category/:category/per/:per", :to => "store#index", :as => 'category_filter'
   post "order_lines/book/:book_id", :to => "order_lines#create", :as => 'add_to_cart'
   match "store/index?page=:id", :to => 'store#index', :as => 'store'
-  map.connect '/store/page/:page', :controller => 'store', :action => 'index'
-  map.resources :store
+  get "store/per/:per", :to => 'store#index'
 
   root to: 'store#index', as: 'store' 
   resources :books

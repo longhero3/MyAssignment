@@ -1,10 +1,9 @@
 class OrderLinesController < ApplicationController
   # GET /order_lines
   # GET /order_lines.json
-  before_filter :admin_authorize
-  skip_before_filter :authenticate
+  before_filter :admin_authorize, :only => [:edit, :update]
   def index
-    
+    @cart = current_cart
     @order_lines = OrderLine.all
 
     respond_to do |format|
@@ -16,6 +15,7 @@ class OrderLinesController < ApplicationController
   # GET /order_lines/1
   # GET /order_lines/1.json
   def show
+    @cart = current_cart
     @order_line = OrderLine.find(params[:id])
 
     respond_to do |format|
@@ -27,6 +27,7 @@ class OrderLinesController < ApplicationController
   # GET /order_lines/new
   # GET /order_lines/new.json
   def new
+    @cart = current_cart
     @order_line = OrderLine.new
 
     respond_to do |format|
@@ -37,6 +38,7 @@ class OrderLinesController < ApplicationController
 
   # GET /order_lines/1/edit
   def edit
+    @cart = current_cart
     @order_line = OrderLine.find(params[:id])
   end
 

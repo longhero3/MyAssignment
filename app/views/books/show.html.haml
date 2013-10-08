@@ -27,19 +27,19 @@
 %p
   %b Average Rating:
   = @book.average_rating
-.well
-  .row
-    = form_for :comment, :url => {:controller => 'comments', :action => 'create'} do |f|
-      .col-md-5
-        = f.text_area :content, :class => "col-md-11", :placeholder => "Enter your comment", :rows => 5
-      - if !@book.is_commented(session[:user_id])
+- if current_user && !@book.is_commented(current_user.id)
+  .well
+    .row
+      = form_for :comment, :url => {:controller => 'comments', :action => 'create'} do |f|
+        .col-md-5
+          = f.text_area :content, :class => "col-md-11", :placeholder => "Enter your comment", :rows => 5
         .col-md-3
           = f.select :rating, (1..5)
-      .col-md-4
-        = f.submit :Post, :class => "btn btn-info"
-      = f.hidden_field :user_id, :value => session[:user_id]
-      = f.hidden_field :book_id, :value => @book.id
-      = f.hidden_field :comment_date, :value => Time.current.to_date
+        .col-md-4
+          = f.submit :Post, :class => "btn btn-info"
+        = f.hidden_field :user_id, :value => session[:user_id]
+        = f.hidden_field :book_id, :value => @book.id
+        = f.hidden_field :comment_date, :value => Time.current.to_date
 %ul.thumbnails
   / Display comments
   = render(@book.comments)

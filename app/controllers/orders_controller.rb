@@ -1,7 +1,9 @@
 class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
+  before_filter :authenticate
   def index
+    @cart = current_cart
     @orders = Order.all
 
     respond_to do |format|
@@ -13,6 +15,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @cart = current_cart
     @order = Order.find(params[:id])
 
     respond_to do |format|
@@ -24,6 +27,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.json
   def new
+    @cart = current_cart
     @order = Order.new
 
     respond_to do |format|
@@ -34,6 +38,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
+    @cart = current_cart
     @order = Order.find(params[:id])
   end
 

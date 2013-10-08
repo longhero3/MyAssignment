@@ -2,7 +2,7 @@
   %ul.nav.nav-pills
     - @categories.each do |category|
       %li
-        = link_to category_filter_path(:category => category.id) do
+        = link_to category_filter_path(:category => category.id,:per => @current_per) do
           = category.name
           %span.badge= category.book_categories.count
     %li
