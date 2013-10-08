@@ -82,4 +82,24 @@ class User < ActiveRecord::Base
       end    
     end   
   end
+
+  def update_email(email_params)
+    if email_params[:old].empty? 
+      return "Alert: Your email is empty"
+    elsif email_params[:new].empty?
+      return "Alert: Your new email is empty"
+    elsif !(email_params[:new] =~ EMAIL_REGULAR_EXP) 
+      return "Alert: Invalid email format"
+    elsif email_params[:password].empty?
+      return "Alert: Your password is empty"
+    else
+      typed_hashed_password = BCrypt::Engine.hash_secret(email_params[:password],salt)
+      if hash_password != typed_hashed_password
+        return "Alert: Invalid password"
+      else
+        update_attributes({ :email => email_params[:new] })
+        return "Your email has been updated"
+      end
+    end   
+  end
 end

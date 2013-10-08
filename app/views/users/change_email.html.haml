@@ -1,0 +1,18 @@
+%h1 Change Email
+= form_for :update_email_info, :url => { :controller => 'users', :action => 'update_email' } do |f|
+  .field
+    = f.label "Old email"
+    %br/
+    = f.text_field :old, :value => @user.email, :readonly => true
+  .field
+    = f.label "New email"
+    %br/
+    = f.text_field :new
+  .field
+    = f.label "Password"
+    %br/
+    = f.password_field :password
+  .actions
+    = f.submit :Change
+= link_to 'Back', my_profile_path
+= link_to 'Back to Store', store_path

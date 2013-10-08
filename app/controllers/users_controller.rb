@@ -86,6 +86,17 @@ class UsersController < ApplicationController
   def update_email
     @cart = current_cart
     @user = current_user
+    result = current_user.update_email(params[:update_email_info])
+    respond_to do |format|
+      if result.include? "Alert"
+        flash[:alert] = result
+        format.html { render action: "change_email"}
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      else
+        format.html { redirect_to store_url, :notice => result }
+        format.json { head :no_content }
+      end
+    end
   end
   # POST /users
   # POST /users.json
