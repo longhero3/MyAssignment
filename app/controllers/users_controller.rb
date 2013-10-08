@@ -2,9 +2,10 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   before_filter :authenticate, :except => [:create, :new]
-  before_filter :admin_authorize, :except => [:edit_profile, :change_password, :change_email, :update_password, :update_email, :update, :create, :new]
+  before_filter :admin_authorize, :only => [:index, :edit, :destroy]
   def index
     @cart = current_cart
+    debugger
     @users = User.all
 
     respond_to do |format|

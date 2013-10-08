@@ -29,7 +29,14 @@ describe UsersController do
   # in order to pass any filters (e.g. authentication) defined in
   # UsersController. Be sure to keep this updated too.
   let(:user) {FactoryGirl.create(:user)}
+  
+
   let(:valid_session) { { :user_id => user.id } }
+
+  before(:each) do
+    user.admin = true
+    user.save
+  end
 
   describe "GET index" do
     it "assigns all users as @users" do
@@ -40,8 +47,7 @@ describe UsersController do
   end
 
   describe "GET show" do
-    it "user receives confirmation_token" do
-    
+    it "user receives confirmation_token" do 
       get :show, {:confirmation_token => user.confirmation_token}, valid_session
       assigns(:user).should eq(user)
     end
@@ -57,8 +63,15 @@ describe UsersController do
   describe "GET edit" do
     it "assigns the requested user as @user" do
       # user = User.create! valid_attributes
-      get :edit, { :id => user.to_param }, valid_session
+      get :edit, { :id => user.id }, valid_session
       assigns(:user).should eq(user)
+    end
+  end
+
+  describe "GET edit_profile" do 
+    it "should have content edit_profile" do 
+      get :edit_profile, {}, valid_session
+      response.should render_template :edit_profile
     end
   end
 
