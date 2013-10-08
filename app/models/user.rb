@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   after_save :clear_password
 
-  attr_accessible :email, :birthday, :create_date, :full_name, :password, :phone, 
+  attr_accessible :email, :birthday, :create_date, :full_name, :password, :hash_password, :phone, 
   	:username, :password_confirmation, :admin, :confirmation_token, :fail_attempts
   attr_accessor :password
 
@@ -18,17 +18,11 @@ class User < ActiveRecord::Base
   validates :phone, :presence => true, :format => PHONE_EXP
 
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :stretches => 20
-  def encrypt_password 
-  	if password.present?
-      self.salt = BCrypt::Engine.generate_salt
-      self.hash_password = BCrypt::Engine.hash_secret(password,self.salt)
-  	end
-  end
+  
 
   def self.authenticate(username,password)
     user=find_by_username(username)
-    return nil if !user
-    
+    return nil if !user 
     typed_hashed_password = BCrypt::Engine.hash_secret(password,user.salt)
     if user && user.hash_password == typed_hashed_password
       user
@@ -41,9 +35,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def is_activated
-    return true if confirmed_at != nil
-    return false
+  def self.addUser(pending_user_params)
+    pending_user_params[:admin] = true if User.count == 0
+    User.new(pending_user_params)
   end
 
   def self.confirm_user(confirm_token)
@@ -57,15 +51,35 @@ class User < ActiveRecord::Base
     end 
   end
 
+  def is_activated
+    return true if confirmed_at != nil
+    return false
+  end
 
-  def self.addUser(pending_user_params)
-
-    pending_user_params[:admin] = true if User.count == 0
-    User.new(pending_user_params)
-
+  def encrypt_password 
+    if password.present?
+      self.salt = BCrypt::Engine.generate_salt
+      self.hash_password = BCrypt::Engine.hash_secret(password,self.salt)
+    end
   end
 
   def clear_password
   	self.password = nil
+  end
+
+  def update_password(password_params)    
+    if password_params[:old].empty? || password_params[:new].empty?
+      return "Alert: Some Fields are empty"
+    else 
+      typed_hashed_password = BCrypt::Engine.hash_secret(password_params[:old],salt)
+      if typed_hashed_password != hash_password
+        return "Alert: Invalid Password"
+      elsif password_params[:new] != password_params[:confirm_new]
+        return "Alert: New Password and confirm mismatch"
+      else
+        update_attributes({:password => password_params[:new] })
+        return "The new password is updated"
+      end    
+    end   
   end
 end

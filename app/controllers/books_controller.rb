@@ -1,6 +1,8 @@
 class BooksController < ApplicationController
   # GET /books
   # GET /books.json
+  before_filter :admin_authorize, :except => [:show]
+
   def index
     @cart = current_cart
     @books = Book.all

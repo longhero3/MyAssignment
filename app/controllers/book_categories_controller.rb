@@ -1,6 +1,7 @@
 class BookCategoriesController < ApplicationController
   # GET /book_categories
   # GET /book_categories.json
+  before_filter :admin_authorize
   def index
     @book_categories = BookCategory.all
 

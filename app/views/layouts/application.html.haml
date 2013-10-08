@@ -16,7 +16,7 @@
                 %li.nav-header
                   %strong
                     Welcome, #{current_user.username}
-                %li= link_to "My Profile", edit_user_path(current_user.id)
+                %li= link_to "My Profile", my_profile_path
                 %li= link_to "Logout", logout_path, :method => "post"
               - else
                 / Anonymous user
@@ -25,6 +25,14 @@
                 %li= link_to "Login", login_path
               %li= link_to "Home", store_path
               %li= link_to "Register", new_user_path
+            #admin_pane
+              - if current_user && current_user.admin?
+                %ul.nav.nav_list
+                  %li.nav_header
+                    %strong Admin Panel
+                  %li= link_to "Books", books_path
+                  %li= link_to "Categories", categories_path
+                  %li= link_to "Orders", orders_path
             #cart
               - if @cart.order_lines.count > 0
                 = render 'carts/cart', :object => @cart

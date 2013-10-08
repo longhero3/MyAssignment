@@ -37,6 +37,13 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def admin_authorize
+      set_return_point(request.url,true)
+      unless current_user.admin?
+        redirect_to store_url, :notice => "You are not admin"
+      end
+    end
+
     def set_return_point(path, overwrite = false)
       if overwrite or session[:return_point].blank?
         session[:return_point] = path

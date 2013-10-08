@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
-  skip_before_filter :authenticate
+  before_filter :admin_authorize, :except => [:edit_profile, :change_password, :change_email, :update_password, :update_email, :update]
   def index
     @cart = current_cart
     @users = User.all
@@ -44,9 +44,49 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @cart = current_cart
-    @user = User.find(params[:id])
+    @user = User.find(params[:id])    
   end
 
+  # GET /my_profile
+  def edit_profile
+    @cart = current_cart
+    @user = current_user
+  end
+
+  #GET /change_password
+  def change_password
+    @cart = current_cart
+    @user = current_user
+  end
+
+  # GET /change_email
+  def change_email
+    @cart = current_cart
+    @user = current_user
+  end
+
+  # PUT /update_password
+  def update_password
+    @cart = current_cart
+    @user = current_user
+    result = current_user.update_password(params[:update_password_info])
+    respond_to do |format|
+      if result.include? "Alert"
+        flash[:alert] = result
+        format.html { render action: "change_password"}
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      else
+        format.html { redirect_to store_url, :notice => result }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  # PUT /update_email
+  def update_email
+    @cart = current_cart
+    @user = current_user
+  end
   # POST /users
   # POST /users.json
   def create

@@ -1,9 +1,10 @@
 class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
+  before_filter :admin_authorize
   def index
+    @cart = current_cart
     @categories = Category.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @categories }
@@ -13,6 +14,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
+    @cart = current_cart
     @category = Category.find(params[:id])
 
     respond_to do |format|
@@ -23,7 +25,8 @@ class CategoriesController < ApplicationController
 
   # GET /categories/new
   # GET /categories/new.json
-  def new
+  def new  
+    @cart = current_cart
     @category = Category.new
 
     respond_to do |format|
@@ -34,6 +37,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
+    @cart = current_cart
     @category = Category.find(params[:id])
   end
 

@@ -34,15 +34,19 @@ MyAssignment::Application.routes.draw do
   #get 'users/password/new', :to => "my_devise/passwords#new"
   # devise_for :users
   devise_for :users, :controllers => {:passwords => "my_devise/my_passwords" }
+  controller :users do 
+    get "my_profile", :to => :edit_profile
+    get "change_password", :to => :change_password
+    get "change_email", :to => :change_email
+  end
   
-
   get "category/:category", :to => "store#index", :as => 'category_filter'
   post "order_lines/book/:book_id", :to => "order_lines#create", :as => 'add_to_cart'
   match "store/index?page=:id", :to => 'store#index', :as => 'store'
-  resources :books
+  
 
   root to: 'store#index', as: 'store' 
-
+  resources :books
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
