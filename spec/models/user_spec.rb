@@ -28,21 +28,21 @@ describe User do
     end
   end
 
-  describe 'Class methods' do 
-    before do
-      
-    end
-    
+  describe ".authenticate" do
     it "authenticate the user correctly" do
       result = User.authenticate(user.username, user.password)
       expect(result).to eq(user)
     end
+  end
 
+  describe ".add_user" do
     it "should add user correctly" do 
       User.add_user(new_user_params).save
       expect(User.count).to eq(1)
     end
+  end
 
+  describe ".confirm_user" do
     it "gets activated correctly" do 
       User.add_user(new_user_params).save
       User.confirm_user(User.first.confirmation_token)
@@ -50,19 +50,24 @@ describe User do
     end
   end
 
-  describe 'Instance Method' do
+  describe '#clear_password' do
 
     it "clears the plain text password" do 
       user.clear_password
       expect(user.password).to eq(nil)
     end
+  end
 
+
+  describe '#update_password' do
     it "updates the password correctly" do 
       password_params = { :old => user.password, :new => "1", :confirm_new => "1" } 
       user.update_password(password_params)
       expect(user.password).to eq("1")
     end
-
+  end
+  
+  describe '#update_email' do
     it "updates email correctly" do 
       email_params = { :old => user.email, :new => "longhero3@yahoo.com", :password => "123" } 
       user.update_email(email_params)
