@@ -1,9 +1,8 @@
 class User < ActiveRecord::Base
   before_save :encrypt_password
-  after_save :clear_password
 
   attr_accessible :email, :birthday, :create_date, :full_name, :password, :hash_password, :phone, 
-  	:username, :password_confirmation, :admin, :confirmation_token, :fail_attempts
+  	:username, :password_confirmation, :admin, :confirmation_token, :confirmed_at, :fail_attempts
   attr_accessor :password
 
   has_many :orders, dependent: :destroy
@@ -35,7 +34,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.addUser(pending_user_params)
+  def self.add_user(pending_user_params)
     pending_user_params[:admin] = true if User.count == 0
     User.new(pending_user_params)
   end
@@ -43,8 +42,9 @@ class User < ActiveRecord::Base
   def self.confirm_user(confirm_token)
     user = find_by_confirmation_token(confirm_token)
     if user 
-      user.confirmed_at = DateTime.now
-      user.save
+      # user.confirmed_at = DateTime.now
+      # user.save
+      user.update_attributes({ :confirmed_at => DateTime.now })
       return user
     else
       return nil

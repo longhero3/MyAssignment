@@ -8,16 +8,18 @@ Then /^he should see the error message$/ do
   expect(page).to have_selector("div.alert.alert-danger")
 end
 Given /^he has an account$/ do 
-  @user=FactoryGirl.create(:confirmed_user)
+  @user=FactoryGirl.create(:user, :confirmed_at => DateTime.now)
 end
 When /^he submits valid username and password$/ do
-  fill_in "Username",    with: @user.username
-  fill_in "Password", with: @user.password
+  fill_in "username", :with => @user.username
+  fill_in "password", :with => @user.password
   click_button "Log in"
 end
 Then /^he should see the store page$/ do
-  expect(page).to have_selector("div#store")
+  page.should have_selector('strong', :text => "Welcome")
+
 end
 Then /^he should see sign out link$/ do
-  expect(page).to have_link('Logout', href: logout_path)
+  save_and_open_page
+  page.should have_link('Logout')
 end
