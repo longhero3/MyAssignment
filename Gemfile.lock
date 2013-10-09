@@ -106,6 +106,8 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.0)
+    launchy (2.3.0)
+      addressable (~> 2.3)
     libwebsocket (0.1.5)
       addressable
     mail (2.5.4)
@@ -211,6 +213,7 @@ DEPENDENCIES
   faker
   haml-rails
   jquery-rails
+  launchy
   pg
   rails (= 3.2.14)
   rails_12factor

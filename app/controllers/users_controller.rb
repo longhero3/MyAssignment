@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   before_filter :admin_authorize, :only => [:index, :edit, :destroy]
   def index
     @cart = current_cart
-    debugger
     @users = User.all
 
     respond_to do |format|
@@ -104,7 +103,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @cart = current_cart
-    @user = User.addUser(params[:user])
+    @user = User.add_user(params[:user])
 
     respond_to do |format|
       if @user.save

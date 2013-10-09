@@ -17,7 +17,7 @@
                   %strong
                     Welcome, #{current_user.username}
                 %li= link_to "My Profile", my_profile_path
-                %li= link_to "Logout", logout_path, :method => "post"
+                %li= link_to "Logout", logout_path, :method => "post", :id => 'logout'
               - else
                 / Anonymous user
                 %li.nav-header

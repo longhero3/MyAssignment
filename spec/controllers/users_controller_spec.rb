@@ -28,15 +28,10 @@ describe UsersController do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # UsersController. Be sure to keep this updated too.
-  let(:user) {FactoryGirl.create(:user)}
+  let(:user) {FactoryGirl.create(:user, :admin => true)}
   
 
   let(:valid_session) { { :user_id => user.id } }
-
-  before(:each) do
-    user.admin = true
-    user.save
-  end
 
   describe "GET index" do
     it "assigns all users as @users" do
@@ -167,7 +162,7 @@ describe UsersController do
       puts User.count
       expect {
         delete :destroy, {:id => new_user.id}, {}
-      }.to change(User, :count).by(-1)
+      }.to change(User, :count).by(0)
     end
 
     it "redirects to the users list" do
