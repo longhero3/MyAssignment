@@ -11,7 +11,7 @@ class StoreController < ApplicationController
     @cart = current_cart
   	@books = current_category.books.search(params[:search]).order(:title).paginate(:per_page => @current_per, :page => params[:page])
   	#@books = Book.search(params[:search]).order(:title).paginate(:per_page => 5, :page => params[:page])
-  	@categories = Category.order(:id)
+  	@categories = Category.order(:sort_order)
 
   	respond_to do |format|
   		format.html

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe User do
   let(:user) { FactoryGirl.create :user }
+  let(:new_user_params) { FactoryGirl.attributes_for(:user) } 
   describe 'validations' do
     it{ should have_many(:orders)}
     it{ should have_many(:comments)}
@@ -27,24 +28,29 @@ describe User do
     end
   end
 
-  describe 'class methods' do 
+  describe 'Class methods' do 
+    before do
+      
+    end
+    
     it "authenticate the user correctly" do
       result = User.authenticate(user.username, user.password)
       expect(result).to eq(user)
     end
 
     it "should add user correctly" do 
-      second_user_params = FactoryGirl.attributes_for(:user)
-      User.add_user(second_user_params).save
+      User.add_user(new_user_params).save
       expect(User.count).to eq(1)
     end
 
     it "gets activated correctly" do 
-      new_user_attributes = FactoryGirl.attributes_for(:user)
-      User.add_user(new_user_attributes).save
+      User.add_user(new_user_params).save
       User.confirm_user(User.first.confirmation_token)
       expect(User.first.confirmed_at).not_to eq(nil)
     end
+  end
+
+  describe 'Instance Method' do
 
     it "clears the plain text password" do 
       user.clear_password
@@ -52,19 +58,13 @@ describe User do
     end
 
     it "updates the password correctly" do 
-      password_params = {}
-      password_params[:old] = user.password
-      password_params[:new] = "1"
-      password_params[:confirm_new] = "1"
+      password_params = { :old => user.password, :new => "1", :confirm_new => "1" } 
       user.update_password(password_params)
       expect(user.password).to eq("1")
     end
 
     it "updates email correctly" do 
-      email_params = {}
-      email_params[:old] = user.email
-      email_params[:new] = "longhero3@yahoo.com"
-      email_params[:password] = "123"
+      email_params = { :old => user.email, :new => "longhero3@yahoo.com", :password => "123" } 
       user.update_email(email_params)
       expect(user.email).to eq(email_params[:new])
     end 

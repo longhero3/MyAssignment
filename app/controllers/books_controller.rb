@@ -5,7 +5,7 @@ class BooksController < ApplicationController
 
   def index
     @cart = current_cart
-    @books = Book.all
+    @books = Book.order(:title).paginate(:per_page => 5, :page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

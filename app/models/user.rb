@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
     if user 
       # user.confirmed_at = DateTime.now
       # user.save
-      user.update_attributes({ :confirmed_at => DateTime.now })
+      user.update_attributes(:confirmed_at => DateTime.now)
       return user
     else
       return nil

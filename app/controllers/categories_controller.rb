@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   before_filter :admin_authorize
   def index
     @cart = current_cart
-    @categories = Category.all
+    @categories = Category.order(:sort_order)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @categories }
@@ -44,6 +44,7 @@ class CategoriesController < ApplicationController
   # POST /categories
   # POST /categories.json
   def create
+    @cart = current_cart
     @category = Category.new(params[:category])
 
     respond_to do |format|
@@ -60,6 +61,7 @@ class CategoriesController < ApplicationController
   # PUT /categories/1
   # PUT /categories/1.json
   def update
+    @cart = current_cart
     @category = Category.find(params[:id])
 
     respond_to do |format|

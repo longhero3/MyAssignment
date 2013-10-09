@@ -4,8 +4,8 @@ class Book < ActiveRecord::Base
   	:rating_count, :total_rating_value
 
   has_many :comments
-  has_many :order_lines
-  has_many :book_categories
+  has_many :order_lines, dependent: :destroy
+  has_many :book_categories, dependent: :destroy
   has_many :categories, through: :book_categories
 
   before_destroy :ensure_not_referenced_by_any_order_item
