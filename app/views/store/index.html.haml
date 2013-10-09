@@ -10,7 +10,7 @@
         = form_tag store_path, :method => 'get', :id => "books_search" do
           = text_field_tag :search, params[:search] , :class => 'form-control', :placeholder => "Enter Search Keywords"
 .row
-  .col-md-6.col-md-offset-5
+  .col-md-6.col-md-offset-4
     = will_paginate @books
 #book-content
   = render @books

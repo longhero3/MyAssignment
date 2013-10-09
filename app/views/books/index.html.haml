@@ -1,13 +1,15 @@
 %h1 Listing books
-%table
+
+%table.table.table-striped.table-condensed
   %tr
+    %th Image
     %th title
     %th Description
     %th Author
     %th Publisher
     %th Published date
     %th Price
-    %th Img url
+    
     %th Total rating value
     %th Rating count
     %th
@@ -15,13 +17,13 @@
     %th
   - @books.each do |book|
     %tr
+      %td= image_tag(book.img_url)
       %td= book. title
       %td= sanitize(book.description)
       %td= book.author
       %td= book.publisher
       %td= book.published_date
       %td= book.price
-      %td= book.img_url
       %td= book.total_rating_value
       %td= book.rating_count
       %td= link_to 'Show', book

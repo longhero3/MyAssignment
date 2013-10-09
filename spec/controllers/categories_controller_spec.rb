@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CategoriesController do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user, :admin => true) }
   let(:valid_session) { {:user_id => user.id} }
 
   describe "GET #index " do

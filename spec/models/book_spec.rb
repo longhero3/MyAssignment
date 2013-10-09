@@ -51,6 +51,18 @@ describe Book do
     expect(book.average_rating).to eq(3)
   end
 
+  it 'checks if the books is commented by a specific user' do 
+    user_attrs = FactoryGirl.attributes_for(:user)
+    User.add_user(user_attrs).save
+    result = book.is_commented(User.first.id)
+    expect(result).to eq(false)
+  end
 
+  it 'search by author and title of the book ignore case' do
+    cook_book = FactoryGirl.create(:book, :title => "Cooking a delicious disk")
+    food_book = FactoryGirl.create(:book, :author => "James Cook")
+    health_book = FactoryGirl.create(:book, :title => "aaa", :author => "bbb")
+    expect(Book.search("cook").count).to eq(2)
+  end
 end
 
