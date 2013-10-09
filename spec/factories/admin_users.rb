@@ -1,12 +1,13 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
 FactoryGirl.define do
-  factory :user do
+  factory :admin_user do
   	username { Faker::Name.name}
     full_name { Faker::Name.name}
     sequence(:email) { |n| "user_#{n}@gmail.com" }
-    password "123"
-    # password_confirmation "123"
+    password "1234"
+    password_confirmation "1234"
     birthday Date.new(1991,9,13)
     phone "2345234543243"
+    confirmed_at DateTime.now
+    admin true
   end
 end
