@@ -18,37 +18,31 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :stretches => 20
   
-
-  def self.authenticate(username,password)
-    user=find_by_username(username)
-    return nil if !user 
-    typed_hashed_password = BCrypt::Engine.hash_secret(password,user.salt)
-    if user && user.hash_password == typed_hashed_password
-      user
-    elsif user && user.hash_password != typed_hashed_password
-      user.fail_attempts -= 1
-      user.save
-      nil
-    else
-      nil
+  class << self
+    def authenticate(username,password)
+      user=find_by_username(username)
+      return nil if !user 
+      typed_hashed_password = BCrypt::Engine.hash_secret(password,user.salt)
+      if user && user.hash_password == typed_hashed_password
+        user
+      elsif user && user.hash_password != typed_hashed_password
+        user.fail_attempts -= 1
+        user.save
+        nil
+      else
+        nil
+      end
     end
-  end
 
-  def self.add_user(pending_user_params)
-    pending_user_params[:admin] = true if User.count == 0
-    User.new(pending_user_params)
-  end
-
-  def self.confirm_user(confirm_token)
-    user = find_by_confirmation_token(confirm_token)
-    if user 
-      # user.confirmed_at = DateTime.now
-      # user.save
-      user.update_attributes(:confirmed_at => DateTime.now)
-      return user
-    else
-      return nil
-    end 
+    def confirm_user(confirm_token)
+      user = find_by_confirmation_token(confirm_token)
+      if user 
+        user.update_attributes(:confirmed_at => DateTime.now)
+        return user
+      else
+        return nil
+      end 
+    end
   end
 
   def is_activated

@@ -17,14 +17,15 @@
                   %strong
                     Welcome, #{current_user.username}
                 %li= link_to "My Profile", my_profile_path
+                %li= link_to "My Orders", my_orders_path
                 %li= link_to "Logout", logout_path, :method => "post", :id => 'logout'
               - else
                 / Anonymous user
                 %li.nav-header
                   %strong Welcome
                 %li= link_to "Login", login_path
+                %li= link_to "Register", new_user_path
               %li= link_to "Home", store_path
-              %li= link_to "Register", new_user_path
             #admin_pane
               - if current_user && current_user.admin?
                 %ul.nav.nav_list
@@ -34,7 +35,9 @@
                   %li= link_to "Books", books_path
                   %li= link_to "Categories", categories_path
                   %li= link_to "Orders", orders_path
+                  %li= link_to "OrderLines", order_lines_path
             #cart
+              %h2 Your Cart
               - if @cart.order_lines.count > 0
                 = render 'carts/cart', :object => @cart
           - if notice

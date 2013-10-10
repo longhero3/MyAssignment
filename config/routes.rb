@@ -39,6 +39,10 @@ MyAssignment::Application.routes.draw do
     get "change_password", :to => :change_password
     get "change_email", :to => :change_email
   end
+
+  controller :orders do 
+    get "my_orders", :to => :my_orders
+  end
   
   get "category/:category/per/:per", :to => "store#index", :as => 'category_filter'
   post "order_lines/book/:book_id", :to => "order_lines#create", :as => 'add_to_cart'

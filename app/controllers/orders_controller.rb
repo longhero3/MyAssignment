@@ -24,6 +24,12 @@ class OrdersController < ApplicationController
     end
   end
 
+  #GET /my_orders
+  def my_orders
+    @cart = current_cart
+    @orders = Order.where('user_id = ?', "#{session[:user_id]}").paginate(:per_page => 8, :page => params[:page])
+  end
+
   # GET /orders/new
   # GET /orders/new.json
   def new
@@ -45,14 +51,18 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(params[:order])
+    @cart = current_cart
+    result = Order.create_order(params[:order])
 
     respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+      if result
+        OrderLine.update_order_lines(result.id, @cart.id)
+        # @cart.destroy
+        format.html { redirect_to store_url, notice: "Your order is confirmed and saved" }
         format.json { render json: @order, status: :created, location: @order }
       else
-        format.html { render action: "new" }
+        flash[:alert] = "Empty address"
+        format.html { render action: "new"}
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
@@ -61,6 +71,7 @@ class OrdersController < ApplicationController
   # PUT /orders/1
   # PUT /orders/1.json
   def update
+    @cart = current_cart
     @order = Order.find(params[:id])
 
     respond_to do |format|
@@ -77,6 +88,7 @@ class OrdersController < ApplicationController
   # DELETE /orders/1
   # DELETE /orders/1.json
   def destroy
+    @cart = current_cart
     @order = Order.find(params[:id])
     @order.destroy
 

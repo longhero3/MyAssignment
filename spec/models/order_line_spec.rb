@@ -9,8 +9,8 @@ describe OrderLine do
     it{ should belong_to :cart }
   end
 
-  describe "class method test" do 
-    before(:each) do 
+  describe ".total_price" do 
+    before do 
       book.update_attributes({:price => 1.2})
       cart.add_book(book.id).save
       cart.add_book(book.id).save

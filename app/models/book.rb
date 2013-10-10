@@ -22,19 +22,7 @@ class Book < ActiveRecord::Base
   	:message => 'Must be gif, pnj or jpg image'
   }
 
-  # validates :happened_at_is_valid_datetime
-
-  # def happened_at_is_valid_datetime
-  #   errors.add(:published_date, 'must be a valid datetime') if ((DateTime.parse(published_date) rescue ArgumentError) == ArgumentError)
-  # end
-  def is_commented(user_id)
-    comment=comments.find_by_user_id(user_id)
-    if comment
-      return true
-    else
-      return false
-    end
-  end
+  
 
   class << self
     def search(input)
@@ -46,21 +34,28 @@ class Book < ActiveRecord::Base
     end
   end
 
+  def is_commented(user_id)
+    comment=comments.find_by_user_id(user_id)
+    if comment
+      return true
+    else
+      return false
+    end
+  end
+
   def average_rating
+    return 0 if rating_count == 0
     average = total_rating_value / rating_count
   end
 
   private
 
-  def ensure_not_referenced_by_any_order_item
-    if order_lines.empty?
-      return true
-    else
-      errors.add(:base, 'Order Lines present')
-      return false
-    end
-  end
-
-  
-
+    def ensure_not_referenced_by_any_order_item
+      if order_lines.empty?
+        return true
+      else
+        errors.add(:base, 'Order Lines present')
+        return false
+      end
+    end 
 end

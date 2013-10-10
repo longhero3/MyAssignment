@@ -86,7 +86,7 @@ class OrderLinesController < ApplicationController
 
     respond_to do |format|
       if @order_line.save
-        format.html { redirect_to store_url }
+        format.html { redirect_to order_lines_url, notice: "One order item has been deleted" }
         format.js
         format.json { head :no_content }
       end

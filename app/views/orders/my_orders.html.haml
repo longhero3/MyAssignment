@@ -1,0 +1,9 @@
+%h1 My Orders
+= will_paginate @orders
+%table.table.table-striped.table-condensed
+  %tr 
+    %th Order ID
+    %th Order Date
+    %th Total amount
+    %th
+  = render @orders

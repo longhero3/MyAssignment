@@ -9,7 +9,7 @@ class Cart < ActiveRecord::Base
   	else
   		current = order_lines.build(book_id: book_id)
   		current.quantity = 1
-      current.update_attributes({:unit_price => current.book.price })
+      current.update_attributes(:unit_price => current.book.price)
   	end
   	current
   end

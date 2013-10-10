@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
-  before_filter :authenticate, :except => [:create, :new]
+  before_filter :authenticate, :except => [:create, :new, :show]
   before_filter :admin_authorize, :only => [:index, :edit, :destroy]
   def index
     @cart = current_cart
@@ -21,6 +21,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user
+        session[:user_id] = @user.id 
         format.html { redirect_to store_url, notice: "Your account is now activated "}
         format.json { render json: @user }
       else
@@ -103,7 +104,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @cart = current_cart
-    @user = User.add_user(params[:user])
+    @user = User.new(params[:user])
 
     respond_to do |format|
       if @user.save

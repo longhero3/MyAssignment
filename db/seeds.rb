@@ -5,6 +5,17 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+User.delete_all
+User.create(
+  :username => 'long',
+  :password => '123',
+  :email => 's3324816@rmit.edu.vn',
+  :phone => '124234',
+  :full_name => 'long',
+  :birthday => DateTime.new(1991,12,12),
+  :admin => true,
+  :confirmed_at => DateTime.now
+)
 Book.delete_all
 Book.create(
   :title => 'Web Design for Developers',

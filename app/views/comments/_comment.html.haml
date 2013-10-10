@@ -1,10 +1,11 @@
-%li.col-md-5.clearfix
-  .thumbnail.clearfix
-    .pull-left
-      %p
-        Rating:
-        %strong
-          = comment.rating
-      %h4
-        = comment.user.full_name
-      %small= comment.content
+%tr
+  %td= comment.comment_date
+  %td= comment.user.username
+  %td= comment.content, 
+  %td 
+    - 5.times do |i|
+      - unless i == comment.rating - 1
+        %input{ :name => "star2", :type => "radio", :class => "star", :disabled => "disabled" }
+      - else
+        %input{ :name => "star2", :type => "radio", :class => "star", :disabled => "disabled", :checked => "checked" }
+  
