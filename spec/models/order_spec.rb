@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Order do
   describe "validations" do 
-    it{ should belongs_to :user }
+    it{ should belong_to :user }
     it{ should have_many(:order_lines).dependent(:destroy) }
     it{ should validate_presence_of(:shipping_address) }
   end
