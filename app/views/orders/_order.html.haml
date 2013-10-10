@@ -1,0 +1,5 @@
+%tr
+  %td= order.id
+  %td= order.date
+  %td= number_to_currency(order.total_amount) 
+  %td= link_to "View Details", order_path(:id => order.id) 

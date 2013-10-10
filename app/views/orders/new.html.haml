@@ -1,3 +1,32 @@
-%h1 New order
-= render 'form'
-= link_to 'Back', orders_path
+%h1 Your Order
+%table.table.table-striped.table-condensed
+  %tr 
+    %th Quantity
+    %th Title
+    %th Unit Price
+    %th Total Value
+    %th
+    %th
+  = render @cart.order_lines
+  %tr.total_line
+    %td{:colspan => "3"} Total
+    %td.total_cell{:colspan => "3"}= number_to_currency(@cart.total_price)
+%h3 Shipping info
+= form_for :order, :url => {:controller => 'orders', :action => 'create'} do |f|
+  .field
+    = f.label :date
+    %br/
+    = f.text_field :date, :value => Time.current.to_date, :readonly => true
+  .field
+    = f.label :total_amount
+    %br/
+    = f.text_field :total_amount, :value => @cart.total_price, :readonly => true
+  .field
+    = f.label :shipping_address
+    %br/
+    = f.text_field :shipping_address
+  = f.hidden_field :user_id, :value => session[:user_id]
+
+  .actions
+    = f.submit "Confirm Order"
+= link_to 'Back', store_path

@@ -6,6 +6,14 @@ class OrderLine < ActiveRecord::Base
   belongs_to :cart
 
   def total_price
-  	book.price * quantity
+    book.price * quantity
+  end
+
+  class << self
+    def update_order_lines(in_order_id,in_cart_id)
+      order_lines = OrderLine.where('cart_id = ?', "#{in_cart_id}")
+      order_lines.update_all(:order_id => in_order_id, :cart_id => nil)    
+      puts order_lines  
+    end
   end
 end

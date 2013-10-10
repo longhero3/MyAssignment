@@ -6,11 +6,22 @@
   %b Total amount:
   = @order.total_amount
 %p
-  %b User:
-  = @order.user_id
-%p
   %b Shipping address:
   = @order.shipping_address
-= link_to 'Edit', edit_order_path(@order)
-|
-\#{link_to 'Back', orders_path}
+%table.table.table-striped.table-condensed
+  %tr
+    %th Quantity
+    %th Book Title
+    %th Unit Price
+    %th Total Price
+  - @order.order_lines.each do |order_line|
+    %tr
+      %td= order_line.quantity
+      %td= order_line.book.title
+      %td= number_to_currency(order_line.unit_price)
+      %td= number_to_currency(order_line.total_price)
+  %tr.total_line
+    %td.total_label{:colspan => "3"} Total
+    %td.total_cell{:colspan => "1"}= number_to_currency(@order.total_amount)
+
+
