@@ -1,32 +1,48 @@
-%p#notice= notice
-= image_tag(@book.img_url)
-%p
-  %b title:
-  = @book. title
-%p
-  %b Description:
-  = sanitize(@book.description)
-%p
-  %b Author:
-  = @book.author
-%p
-  %b Publisher:
-  = @book.publisher
-%p
-  %b Published date:
-  = @book.published_date
-%p
-  %b Price:
-  = @book.price
-%p
-  %b Total rating value:
-  = @book.total_rating_value
-%p
-  %b Rating count:
-  = @book.rating_count
-%p
-  %b Average Rating:
-  = @book.average_rating
+
+.row
+  .col-md-11
+    .row
+      .col-md-8
+        %h4
+          %strong= @book.title
+    .row
+      .col-md-3
+        = link_to add_to_cart_path(book_id: @book.id), :class => "thumbnail", :remote => true, :method => 'POST' do
+          = image_tag(@book.img_url, :size => "260x180")
+      .col-md-9
+        %p
+          = sanitize(@book.description)
+        - 5.times do |i|
+          - unless i == @book.average_rating - 1
+            %input{ :name => "star3", :type => "radio", :class => "star", :disabled => "disabled" }
+          - else
+            %input{ :name => "star3", :type => "radio", :class => "star", :disabled => "disabled", :checked => "checked" }
+        %br/
+        %br/
+        = link_to "Add to Cart", add_to_cart_path(book_id: @book.id), :class => 'btn btn-warning', :method => 'POST', :remote => true
+    .row
+      .col-md-8
+        %p
+        %p
+          %i.glyphicon.glyphicon-user
+          Writen By
+          %strong= @book.author
+          |
+          %i.glyphicon.glyphicon-user
+          Published By
+          %strong= @book.publisher
+          |
+          %i.glyphicon.glyphicon-comment
+          Rating Counts
+          %strong= @book.rating_count
+          |
+          %i.glyphicon.glyphicon-comment
+          Total rating value
+          %strong= @book.total_rating_value
+          |
+
+%hr/
+
 - if current_user && !@book.is_commented(current_user.id)
   .well
     .row
@@ -40,7 +56,11 @@
         = f.hidden_field :user_id, :value => session[:user_id]
         = f.hidden_field :book_id, :value => @book.id
         = f.hidden_field :comment_date, :value => Time.current.to_date
-%ul.thumbnails
-  / Display comments
+
+%table.table.table-striped.table-condensed 
+  %tr
+    %th At
+    %th Commenter
+    %th Content
+    %th Rating   
   = render(@book.comments)
-= link_to 'Back', store_path

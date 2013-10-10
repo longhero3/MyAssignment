@@ -7,35 +7,42 @@ describe Cart do
     it{ should have_many(:order_lines).dependent(:destroy) }
   end
 
-  describe "class method tests" do
+  describe "instance method tests" do
     before(:each) do
       book.update_attributes({:price => 1.2})
       cart.add_book(book.id).save
       cart.add_book(book.id).save
     end
-    it "adds order line item quantity by one " do 
-      expect(cart.order_lines[0].quantity).to eq(2)
+
+    describe '.add_book' do
+      it "adds order line item quantity by two " do 
+        expect(cart.order_lines[0].quantity).to eq(2)
+      end
+
+      it "adds more book items when the added book is different" do
+        new_book = FactoryGirl.create(:book)
+        cart.add_book(new_book.id).save
+        expect(cart.order_lines.count).to eq(2)
+      end 
     end
 
-    it "reduce order line item quantity by one" do 
-      cart.minus_quantity(book.id).save
-      expect(cart.order_lines[0].quantity).to eq(1)
+    describe '.minus_quantity' do
+      it "reduce order line item quantity by one" do 
+        cart.minus_quantity(book.id).save
+        expect(cart.order_lines[0].quantity).to eq(1)
+      end
+
+      it "will destroy order item when the quantity comes to 0" do 
+        cart.minus_quantity(book.id).save
+        cart.minus_quantity(book.id).save
+        expect(cart.order_lines.count).to eq(0)
+      end
     end
 
-    it "will destroy order item when the quantity comes to 0" do 
-      cart.minus_quantity(book.id).save
-      cart.minus_quantity(book.id).save
-      expect(cart.order_lines.count).to eq(0)
+    describe '.total_price' do
+      it "calculate total price correctly" do 
+        expect(cart.total_price).to eq(2.4)
+      end
     end
-
-    it "calculate total price correctly" do 
-      expect(cart.total_price).to eq(2.4)
-    end
-
-    it "adds more book items when the added books are different" do
-      new_book = FactoryGirl.create(:book)
-      cart.add_book(new_book.id).save
-      expect(cart.order_lines.count).to eq(2)
-    end 
   end
 end

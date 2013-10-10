@@ -6,26 +6,25 @@
     %th title
     %th Description
     %th Author
-    %th Publisher
-    %th Published date
     %th Price
     
-    %th Total rating value
-    %th Rating count
+    %th Rating
     %th
     %th
     %th
   - @books.each do |book|
     %tr
       %td= image_tag(book.img_url)
-      %td= book. title
-      %td= sanitize(book.description)
+      %td= truncate(book.title)
+      %td= sanitize(truncate(book.description, :length => 50))
       %td= book.author
-      %td= book.publisher
-      %td= book.published_date
       %td= book.price
-      %td= book.total_rating_value
-      %td= book.rating_count
+      %td 
+        - 5.times do |i|
+          - unless i == book.average_rating - 1
+            %input{ :name => "star#{book.id}", :type => "radio", :class => "star", :disabled => "disabled" }
+          - else
+            %input{ :name => "star#{book.id}", :type => "radio", :class => "star", :disabled => "disabled", :checked => "checked" }
       %td= link_to 'Show', book
       %td= link_to 'Edit', edit_book_path(book)
       %td= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }

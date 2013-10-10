@@ -47,6 +47,7 @@ class Book < ActiveRecord::Base
   end
 
   def average_rating
+    return 0 if rating_count == 0
     average = total_rating_value / rating_count
   end
 
