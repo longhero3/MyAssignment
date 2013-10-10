@@ -35,16 +35,9 @@ describe User do
     end
   end
 
-  describe ".add_user" do
-    it "should add user correctly" do 
-      User.add_user(new_user_params).save
-      expect(User.count).to eq(1)
-    end
-  end
-
   describe ".confirm_user" do
     it "gets activated correctly" do 
-      User.add_user(new_user_params).save
+      User.new(new_user_params).save
       User.confirm_user(User.first.confirmation_token)
       expect(User.first.confirmed_at).not_to eq(nil)
     end
@@ -60,8 +53,8 @@ describe User do
 
 
   describe '#update_password' do
-    it "updates the password correctly" do 
-      password_params = { :old => user.password, :new => "1", :confirm_new => "1" } 
+    it "updates the password correctly" do    
+      password_params = { :old => user.password, :new => "1", :confirm_new => "1" }    
       user.update_password(password_params)
       expect(user.password).to eq("1")
     end

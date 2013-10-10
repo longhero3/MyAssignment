@@ -4,12 +4,13 @@ class Order < ActiveRecord::Base
   belongs_to :user
   has_many :order_lines, dependent: :destroy
 
-  class <<self
+  validates :shipping_address, :presence => true
+
+  class << self
     def create_order(order_params)  
       if order_params[:shipping_address].empty?
         return nil
       else 
-        order_params[:total_amount]
         order=Order.new(order_params)
         order.save
         order

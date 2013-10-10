@@ -25,5 +25,4 @@ $(function() {
     	return false;
     }
   });
-  $('#star').raty();
 });

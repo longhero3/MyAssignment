@@ -39,30 +39,43 @@ describe Book do
     end
   end 
 
-  it 'calculates average rating correctly' do
-    book.rating_count = 3
-    book.total_rating_value = 12
-    expect(book.average_rating).to eq(4)
+  describe "#average_rating" do
+    before do 
+      book.rating_count = 3
+      book.total_rating_value = 12
+    end
+
+    it 'calculates average rating correctly' do
+      expect(book.average_rating).to eq(4)
+    end
+
+    it 'calculates average rating with indivisible rating count' do
+      book.total_rating_value = 11
+      expect(book.average_rating).to eq(3)
+    end
   end
 
-  it 'calculates average rating with indivisible rating count' do
-    book.rating_count = 3
-    book.total_rating_value = 11
-    expect(book.average_rating).to eq(3)
+  describe "#is_commented" do
+    before do 
+      user_attrs = FactoryGirl.attributes_for(:user)
+      User.new(user_attrs).save
+    end
+    it 'checks if the books is commented by a specific user' do    
+      result = book.is_commented(User.first.id)
+      expect(result).to eq(false)
+    end
   end
 
-  it 'checks if the books is commented by a specific user' do 
-    user_attrs = FactoryGirl.attributes_for(:user)
-    User.add_user(user_attrs).save
-    result = book.is_commented(User.first.id)
-    expect(result).to eq(false)
-  end
+  describe ".search" do
+    before do 
+      cook_book = FactoryGirl.create(:book, :title => "Cooking a delicious disk")
+      food_book = FactoryGirl.create(:book, :author => "James Cook")
+      health_book = FactoryGirl.create(:book, :title => "aaa", :author => "bbb")
+    end
 
-  it 'search by author and title of the book ignore case' do
-    cook_book = FactoryGirl.create(:book, :title => "Cooking a delicious disk")
-    food_book = FactoryGirl.create(:book, :author => "James Cook")
-    health_book = FactoryGirl.create(:book, :title => "aaa", :author => "bbb")
-    expect(Book.search("cook").count).to eq(2)
+    it 'search by author and title of the book ignore case' do  
+      expect(Book.search("cook").count).to eq(2)
+    end
   end
 end
 
