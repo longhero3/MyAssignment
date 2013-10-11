@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   class << self
     def authenticate(username,password)
       user=find_by_username(username)
-      return nil if !user 
+      return nil unless user 
       typed_hashed_password = BCrypt::Engine.hash_secret(password,user.salt)
       if user && user.hash_password == typed_hashed_password
         user
@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
   def encrypt_password 
     if password.present?
       self.salt = BCrypt::Engine.generate_salt
+      debugger
       self.hash_password = BCrypt::Engine.hash_secret(password,self.salt)
     end
   end
