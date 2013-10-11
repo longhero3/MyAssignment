@@ -10,7 +10,7 @@ Feature: Login
   Scenario: Inactivated login 
     Given he has inactivated account
     When he submits with inactivated account
-    Then he should see the error message "Your account has not been activated"  
+    Then he should see the inactive error message "Your account has not been activated"  
 
   Scenario: Successful Login
     Given he has an account

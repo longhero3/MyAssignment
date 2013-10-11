@@ -19,10 +19,26 @@ When /^he submits valid username and password$/ do
   fill_in "password", :with => @user.password
   click_button "Log in"
 end
-Then /^he should see the store page$/ do
-  page.should have_selector('strong', :text => "Welcome")
 
-end
 Then /^he should see sign out link$/ do
   page.should have_link('Logout')
 end
+
+Then /^he should see the store page$/ do
+  expect(page).to have_selector('strong', :text => "Welcome, #{@user.username}")
+end
+
+Given /^he has inactivated account$/ do
+  @inactive_user = FactoryGirl.create(:user)
+end
+
+When /^he submits with inactivated account$/ do 
+  fill_in "username", :with => @inactive_user.username
+  fill_in "password", :with => @inactive_user.password
+  click_button "Log in"
+end
+
+Then /^he should see the inactive error message "(.*)"$/ do |message|
+  expect(page).to have_content(message)
+end
+
