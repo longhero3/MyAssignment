@@ -96,7 +96,7 @@ describe OrderLinesController do
     it "redirects to the order_lines list" do
       order_line = current_cart.add_book(book.id)
       delete :destroy, {:id => order_line.book_id}, valid_session
-      response.should redirect_to(store_url)
+      response.should redirect_to(order_lines_url)
     end
   end
 

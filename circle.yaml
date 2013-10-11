@@ -1,4 +1,5 @@
 test:
-  post:
+  override:
     - rspec spec/models
     - rspec spec/controllers
+    - cucumber
