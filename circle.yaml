@@ -1,0 +1,4 @@
+test:
+  post:
+    - rspec spec/models
+    - rspec spec/controllers
