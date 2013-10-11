@@ -10,5 +10,6 @@
  *
  *= require_tree ../../../vendor/assets/stylesheets/.
  *= require_self
+ *= require social-share-button
  *= require_tree .
  */

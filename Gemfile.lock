@@ -176,6 +176,7 @@ GEM
       rubyzip
     shoulda-matchers (2.3.0)
       activesupport (>= 3.0.0)
+    social-share-button (0.1.4)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -221,4 +222,5 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 3.2.3)
   shoulda-matchers
+  social-share-button
   uglifier (>= 1.0.3)
