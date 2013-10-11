@@ -46,3 +46,10 @@
             .alert.alert-danger= alert
       #main-content.col-md-9
         = yield
+
+    -if @session_time_left
+      bla bla bla bla bla bla
+      :javascript
+        $(function() {
+          setSessionTimeout('#{check_session_alive_carts_path}', #{@session_time_left})
+        });

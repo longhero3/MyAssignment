@@ -2,6 +2,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_cart
   protect_from_forgery
+  # before_filter :session_expiry
+  # before_filter :update_expiry_time
+  include CartsHelper
 
   private 
 
@@ -25,6 +28,11 @@ class ApplicationController < ActionController::Base
       User.find(session[:user_id])
     rescue ActiveRecord::RecordNotFound
       nil
+    end
+
+    def expire_time_left
+      expire_time = session[:expire_at] || Time.now
+      @session_time_left = (expire_time - Time.now).to_i
     end
 
   protected 
@@ -53,4 +61,14 @@ class ApplicationController < ActionController::Base
       session[:return_point] ? session[:return_point] : store_path
     end
 
+    def session_expiry
+      if expire_time_left < 0 
+        current_cart.destroy
+        destroy_cart
+      end
+    end
+
+    def update_expiry_time
+      session[:expire_at] = 10.seconds.from_now
+    end
 end

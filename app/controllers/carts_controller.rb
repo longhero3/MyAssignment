@@ -79,4 +79,16 @@ class CartsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def check_session_alive
+    get_session_time_left
+    if @session_time_left > 0
+      debugger
+      render 'carts/check_session_alive', :layout=>false
+    else
+      @cart = current_cart
+      @cart.destroy
+      destroy_cart
+    end
+  end  
 end
