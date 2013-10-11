@@ -1,4 +1,4 @@
 test: 
   override:
-    rspec 
-    cucumber
+    bundle exec rspec spec/ 
+    bundle exec cucumber features/
