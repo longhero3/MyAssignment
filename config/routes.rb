@@ -31,6 +31,12 @@ MyAssignment::Application.routes.draw do
 
 
   resources :users
+  devise_scope :user do
+    controller "my_devise/my_passwords" do
+      get "reset_password/reset_password_token/:reset_password_token", :to => :reset_password, :as => 'reset_password' 
+      post "update_password", :to => :update_password
+    end
+  end
   #get 'users/password/new', :to => "my_devise/passwords#new"
   # devise_for :users
   devise_for :users, :controllers => {:passwords => "my_devise/my_passwords" }
@@ -43,6 +49,10 @@ MyAssignment::Application.routes.draw do
   controller :orders do 
     get "my_orders", :to => :my_orders
   end
+  controller :carts do 
+    get "check_session_alive", :to => :check_session_alive
+  end
+
   
   get "category/:category/per/:per", :to => "store#index", :as => 'category_filter'
   post "order_lines/book/:book_id", :to => "order_lines#create", :as => 'add_to_cart'

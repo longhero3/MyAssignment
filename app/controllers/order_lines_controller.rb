@@ -48,7 +48,7 @@ class OrderLinesController < ApplicationController
     @cart = current_cart
     book = Book.find(params[:book_id])
     @order_line = @cart.add_book(book.id)
-
+    
     respond_to do |format|
       if @order_line.save
         format.html { redirect_to store_url, notice: "The book #{book.title} has been added to cart" }

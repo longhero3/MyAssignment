@@ -25,6 +25,7 @@
                   %strong Welcome
                 %li= link_to "Login", login_path
                 %li= link_to "Register", new_user_path
+                %li= link_to "Forgot password?", new_user_password_path
               %li= link_to "Home", store_path
             #admin_pane
               - if current_user && current_user.admin?
@@ -46,10 +47,8 @@
             .alert.alert-danger= alert
       #main-content.col-md-9
         = yield
-
-    -if @session_time_left
-      bla bla bla bla bla bla
+    -if expire_time_left
       :javascript
-        $(function() {
-          setSessionTimeout('#{check_session_alive_carts_path}', #{@session_time_left})
+        $(function(){
+          setSessionTimeout('#{check_session_alive_path}', #{expire_time_left})
         });

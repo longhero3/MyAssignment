@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(:version => 20131004041601) do
 
   create_table "orders", :force => true do |t|
     t.date     "date"
-    t.integer  "total_amount"
+    t.decimal  "total_amount"
     t.integer  "user_id"
     t.string   "shipping_address"
     t.datetime "created_at",       :null => false

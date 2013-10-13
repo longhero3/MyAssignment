@@ -1,9 +1,8 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user
-  helper_method :current_cart
+  helper_method :current_user, :current_cart, :expire_time_left
   protect_from_forgery
-  # before_filter :session_expiry
-  # before_filter :update_expiry_time
+  before_filter :update_expiry_time
+  before_filter :expire_time_left
   include CartsHelper
 
   private 
@@ -31,8 +30,11 @@ class ApplicationController < ActionController::Base
     end
 
     def expire_time_left
-      expire_time = session[:expire_at] || Time.now
-      @session_time_left = (expire_time - Time.now).to_i
+
+      if session[:expire_at].nil?
+        session[:expire_at] = 10.seconds.from_now
+      end
+      @session_time_left = ( session[:expire_at] - Time.now).to_i
     end
 
   protected 
@@ -52,7 +54,7 @@ class ApplicationController < ActionController::Base
     end
 
     def set_return_point(path, overwrite = false)
-      if overwrite or session[:return_point].blank?
+      if session[:return_point].blank?
         session[:return_point] = path
       end
     end

@@ -43,6 +43,18 @@ class User < ActiveRecord::Base
         return nil
       end 
     end
+
+    def update_password(reset_params)
+      if reset_params[:password].empty? || reset_params[:password_confirmation].empty?
+        return "Alert: some fields are missing"
+      elsif reset_params[:password] != reset_params[:password_confirmation]
+        return "Alert: Password and Password Confirm mismatch"
+      else
+        user = User.find_by_reset_password_token(reset_params[:reset_password_token])
+        user.update_attributes(:password => reset_params[:password])
+        return "Your password is updated"
+      end
+    end
   end
 
   def is_activated
@@ -96,4 +108,5 @@ class User < ActiveRecord::Base
       end
     end   
   end
+
 end

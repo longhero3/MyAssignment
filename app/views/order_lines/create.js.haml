@@ -1,0 +1,7 @@
+if($("#cart").is(":visible") == false){
+$("#cart").slideDown();
+$(function(){
+setSessionTimeout('#{check_session_alive_path}', #{expire_time_left})
+});
+}
+$('#cart').html('#{j render @cart}');

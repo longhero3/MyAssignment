@@ -32,5 +32,5 @@ function checkSessionTimeout(url) {
 }
 
 function setSessionTimeout(url, seconds) {
- setTimeout("checkSessionTimeout(\'" + url + "\')", seconds*1000 + 15);
+ setTimeout("checkSessionTimeout(\'" + url + "\')", seconds*1000);
 }

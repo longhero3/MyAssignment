@@ -81,14 +81,12 @@ class CartsController < ApplicationController
   end
 
   def check_session_alive
-    get_session_time_left
-    if @session_time_left > 0
-      debugger
-      render 'carts/check_session_alive', :layout=>false
-    else
-      @cart = current_cart
-      @cart.destroy
-      destroy_cart
+    unless session[:user_id]
+      respond_to do |format|
+        current_cart.destroy
+        session[:expire_at] = nil
+        format.js { render 'carts/destroy' }
+      end
     end
   end  
 end
