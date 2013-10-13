@@ -38,7 +38,6 @@
                   %li= link_to "Orders", orders_path
                   %li= link_to "OrderLines", order_lines_path
             #cart
-              %h2 Your Cart
               - if @cart.order_lines.count > 0
                 = render 'carts/cart', :object => @cart
           - if notice
